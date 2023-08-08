@@ -1,0 +1,2980 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		body {	cursor: url(http://www.rw-designer.com/cursor-extern.php?id=113555);
+				cursor: url(http://www.rw-designer.com/cursor-extern.php?id=113554);
+				cursor: url(http://www.rw-designer.com/cursor-extern.php?id=113551);
+				cursor: url(http://www.rw-designer.com/cursor-extern.php?id=113550);}
+
+	</style>
+	</style>
+	<meta charset="utf-8">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+	<title>Prancheta Tática</title>
+	<img id="Trave1"  style="position: absolute; z-index: 0;left:-1.75%;top: 37.3%; transform:rotate(-90deg);" src="Trave.png">
+	<img id="Trave2"  style="position: absolute; z-index: 0;left:88.5%;top: 37.3%; transform:rotate(90deg);" src="Trave.png">
+	<button id="Bola_btn" style="position:absolute;left:93.7%;top:60.5%" onclick="criar_bola();">
+		<img src="Bola.png" height="30" width="30" style="position:relative;">
+	</button>
+	<button type="button" onclick="novaPrancheta();" style="position:absolute;left:5.12%;top:0%;">Nova Prancheta</button>
+	<select id="prancheta" name="prancheta" style="position:absolute;left:15.12%;top:0%;">>
+	</select>
+	<button type="button" onclick="printDiv();" style="position:absolute;left:23.5%;top:0%;">Tirar Print</button>
+	<button type="button" id="Play" onclick="playAnimacao();" style="display:none;position:absolute;left:30.5%;top:0%;">Play</button>
+
+	<button type="button" disabled="true" id="Cena1" onclick="habilitarBotoes(1);" style="display:none;position:absolute;left:36.5%;top:0%;">Cena 1</button>
+	<button type="button" disabled="true" id="Cena2" onclick="habilitarBotoes(2);" style="display:none;position:absolute;left:41%;top:0%;">Cena 2</button>
+	<button type="button" disabled="true" id="Cena3" onclick="habilitarBotoes(3);" style="display:none;position:absolute;left:45.5%;top:0%;">Cena 3</button>
+	<button type="button" disabled="true" id="Cena4" onclick="habilitarBotoes(4);" style="display:none;position:absolute;left:50%;top:0%;">Cena 4</button>
+	<button type="button" disabled="true" id="Cena5" onclick="habilitarBotoes(5);" style="display:none;position:absolute;left:54.5%;top:0%;">Cena 5</button>
+	<button type="button" disabled="true" id="Cena6" onclick="habilitarBotoes(6);" style="display:none;position:absolute;left:59%;top:0%;">Cena 6</button>
+	<button type="button" disabled="true" id="Cena7" onclick="habilitarBotoes(7);" style="display:none;position:absolute;left:63.5%;top:0%;">Cena 7</button>
+	<button type="button" disabled="true" id="Cena8" onclick="habilitarBotoes(8);" style="display:none;position:absolute;left:68%;top:0%;">Cena 8</button>
+	<button type="button" disabled="true" id="Cena9" onclick="habilitarBotoes(9);" style="display:none;position:absolute;left:72.5%;top:0%;">Cena 9</button>
+	<button type="button" disabled="true" id="Cena10" onclick="habilitarBotoes(10);" style="display:none;position:absolute;left:77%;top:0%;">Cena 10</button>
+	<button type="button" id="Deletar" onclick="Deletar();" style="display:none;position:absolute;left:81.5%;top:0%;">-</button>
+	<button type="button" id="Acrescentar" onclick="Acrescentar();" style="display:none;position:absolute;left:34%;top:0%;">+</button>
+	<label id="Times_lb" name="Times" style="position:absolute;left:0.951%;top:59.581%;color:white;">Times<br>Salvos</label>
+	<select id="Times" style="position:absolute;left:2px;top:65.3%;" size="3">
+		<option selected="selected" value="0">Padrão</option>
+	</select>
+	<button id="Times_btn" name="Times_btn" style="position:absolute;left:6px;top:160px" onclick="Armazenar_Time1();">Salvar<br>Time</button>
+	<button id="Times_btn" name="Times_btn" style="position:absolute;left:6px;top:74.7%" onclick="deletar();">Deletar</button>
+	<label style="position:absolute; color: white; left:5px;top:78.54%;"><b>Formas</b></label>
+	<button  style="position:absolute;left:5px;top:81.3%;" onclick="ativar_line();">Linhas</button>
+	<button  style="position:absolute;left:5px;top:84.5%;" onclick="ativar_vetor();">Vetores</button>
+	<button  style="position:absolute;left:5px;top:87.7%;" onclick="ativar_elipse();">Elipses</button>
+
+	<button  style="position:absolute;left:93.7%;top:85.917%;" onclick="apagar_marcacoes();">Limpar<br>Marcação</button>
+
+
+
+	<div id="Instrucoes_div" style="width:92.24%;position: absolute;z-index: 1;left:18px;top:96.31%;background-color:Black">
+		<label id="Instrucoes" style="position: relative;color: White;left:47.62%;">Linha de Instruções</label>
+	</div>
+
+
+
+
+	<button id="clear" style="position:absolute;left:5px;top:200px;" onclick="Apagar1();">Limpar<br>Time</button>
+	<button id="clear2" style="position:absolute;left:94.87%;top:200px;" onclick="Apagar2();">Limpar<br>Time</button>
+	<button id="Times_btn" name="Times_btn" style="position:absolute;left:94.87%;top:160px" onclick="Armazenar_Time2();">Salvar<br>Time</button>
+	<label id="color1lb" style="position:absolute;left:1px;top:20px;color: white;">Cor Base:</label>
+	<input type="color" name="color1" value="#FF0000" id="color1" onchange ="atualizar_corbase1();" style="position:absolute;left:0px;top:40px;">
+	<label id="color2lb" style="position:absolute;left:1px;top:70px;color:white;">Cor 2:</label>
+	<input type="color" name="color2" value="#FFFFFF" id="color2" onchange="atualizar_cor2();" style="position:absolute;left:0px;top:90px;">
+	<label id="color3lb" style="position:absolute;left:95.17%;top:20px;color: white;">Cor Base:</label>
+	<input type="color" value="#0000FF" name="color3" id="color3" onchange="atualizar_cor3();"style="position:absolute;left:96.27%;top:40px;">
+	<label id="color4lb" style="position:absolute;left:96.19%;top:70px;color:white;">Cor 2:</label>
+	<input type="color" value="#FFFFFF" name="color4" id="color4" onchange="atualizar_cor4();" style="position:absolute;left:96.27%;top:90px;">
+	<button id="botao1" style="position:absolute;left:10px;top:120px;" onclick="Verificar1();distribuir_jogadores1(c);cont1();">Criar<br>Time</button>
+	<label style="position:absolute; color: white; left:1px;top:92.9%;"><b>Formação</b></label>
+	<select id="Formacoes1" name="Formacoes1" style="position:absolute;z-index: 1;left:5px;top:96.25%;">
+			<option  name="Formacoes1"  value="1" selected="selected" >4-3-3(Ofensivo)</option>
+			<option  name="Formacoes1"  value="2">4-2-3-1</option>
+			<option  name="Formacoes1"  value="3">4-3-3(Defensivo)</option>
+			<option  name="Formacoes1"  value="4">4-3-1-2</option>
+			<option  name="Formacoes1"  value="5">4-3-2-1</option>
+			<option  name="Formacoes1"  value="6">4-4-2</option>
+			<option  name="Formacoes1"  value="7">3-4-3</option>
+			<option  name="Formacoes1" value="8">3-5-2</option>
+	</select>
+	<label style="position:absolute;z-index: 1;left:94.07%;top:66.5%;color: white;">Cor das<br>Marcações</label>
+	<select id="Cor_das_Marcacoes" name="Cor_das_Marcacoes"  style="position:absolute;z-index: 1;left:93.7%;top:72.39%">
+		<option value="1" name="Cor_das_Marcacoes" selected="selected">Amarelo</option>
+		<option name="Cor_das_Marcacoes" value="2">Azul</option>
+		<option name="Cor_das_Marcacoes" value="3">Preto</option>
+		<option name="Cor_das_Marcacoes" value="4">Vermelho</option>
+	</select>
+	<label style="position:absolute;z-index: 1;left:94.07%;top:75.5%;color: white;">Espessura<br>das Linhas</label>
+	<select id="Espessura_das_Linhas" name="Espessura_das_Linhas" style="position:absolute;z-index: 1;left:94%;top:81.5%;">
+		<option name="Espessura_das_Linhas" value="1">1</option>
+		<option name="Espessura_das_Linhas" value="2" selected="selected">1.5</option>
+		<option name="Espessura_das_Linhas" value="3">3</option>
+		<option name="Espessura_das_Linhas" value="4">6</option>
+	</select>
+	<button id="botao2" value="1" style="position:absolute;left:95.17%;top:120px;" onclick="Verificar2();distribuir_jogadores2(c);cont2();">Criar<br>Time</button>
+	<label style="position:absolute; color: white; left:94.43%;top:92.9%;"><b>Formação</b></label>
+	<select id="Formacoes2" name="Formacoes2" style="position:absolute;z-index: 1;left:90.63%;top:96.25%;">>
+			<option name="Formacoes2" value="1" selected="selected" >4-3-3(Ofensivo)</option>
+			<option name="Formacoes2" value="2">4-2-3-1</option>
+			<option name="Formacoes2"  value="3">4-3-3(Defensivo)</option>
+			<option name="Formacoes2"  value="4">4-3-1-2</option>
+			<option  name="Formacoes2" value="5">4-3-2-1</option>
+			<option name="Formacoes2"  value="6">4-4-2</option>
+			<option name="Formacoes2"  value="7">3-4-3</option>
+			<option name="Formacoes2"  value="8">3-5-2</option>
+	</select>
+</head>
+<body style="background-color: ForestGreen;">
+	<div id="inicioPrancheta" style="display:none;top:0px;left:0px;position:absolute; background-color: darkgreen;width:100% ;height:100% ;z-index: 2;" >
+	<label style="position:absolute;left: 0px;top:30px; font-size:80px; color: white;">NOVA PRANCHETA</label>	
+		<label style="position:absolute;left: 0px;top:120px; font-size:64px; color: white;">Nome:</label>
+		<input type="text" id="nomePrancheta" maxlength="24" style="position:relative;left: 0px;top:230px; font-size:32px;" >	
+		<label style="position:absolute;left: 0px;top:320px; font-size:64px; color: white;">Animação:</label>	
+		<input type = "checkbox" id = "PranchetaAnimada"  style="width: 40px;height: 40px; position:absolute;left: 280px;top:340px;">
+		<button id="Criar" onclick="criarPrancheta();" style="font-size: 25px; width: 80px;height: 40px; position:absolute;left: 0px;top:400px;">Criar</button>
+		<button id = "Voltar" onclick="Voltar();" style="font-size: 25px; width: 80px;height: 40px; position:absolute;left: 0%;top:0%;">Voltar</button>
+	</div>
+<canvas style="background opacity: 0;z-index: 1; position:absolute;left:5.12%;top:20px;"id="campo" border>
+</canvas>
+	<script>
+		novaPrancheta();
+		//Reconstruindo Dados
+		var Dados=JSON.parse(localStorage.getItem("Dados") || "[]");
+		for(var i=0;i<Dados.length;i++){
+			var opt = document.createElement('option');
+		    opt.value = Dados[i][1];
+		    opt.innerHTML = Dados[i][0];
+		    document.getElementById("Times").appendChild(opt);
+		}
+		var campo=document.getElementById("campo");
+		campo.width=1200*window.innerWidth/1366;
+		campo.height=600*window.innerHeight/649;
+		var c= campo.getContext("2d");
+		//Parte 1 - Campo
+		function desenhar_Campo(c){
+				c.clearRect(0,0,campo.width,campo.height);
+				//Gramado
+				for(var i=0;i<15;i++){
+					if(i%2==0){
+						c.fillStyle="DarkGreen";
+					}else{
+						c.fillStyle="Green";
+					}
+					c.fillRect(i*campo.width/15,0,campo.width/15,campo.height);
+				}
+				//Circulo Central
+				c.beginPath();
+				c.strokeStyle="MintCream";
+				c.lineWidth = 5;
+				c.arc(campo.width/2,campo.height/2,campo.height/6,0,2*Math.PI);
+				c.stroke();
+				//Marca do Centro	
+				c.beginPath();
+				c.fillStyle="MintCream";
+				c.arc(campo.width/2,campo.height/2,campo.width/240,0,2*Math.PI);
+				c.fill();
+				//Linha do Meio Campo
+				c.fillRect((campo.width*239)/480,0,campo.height/120,campo.height);
+				//Área
+				c.strokeRect(0,campo.height*59/240,campo.width*17/120,campo.height*61/120);
+				c.strokeRect(campo.width,campo.height*59/240,-1*campo.width*17/120,campo.height*61/120);
+				//Semicircunferências
+				c.beginPath();
+				c.arc(campo.width*17/120,campo.height/2,campo.height*2/15,-Math.PI*0.5,0.5*Math.PI);
+				c.stroke();
+				c.beginPath();
+				c.arc(campo.width*103/120,campo.height/2,campo.height*2/15,Math.PI*0.5,-0.5*Math.PI);
+				c.stroke();
+				//Pequena Área
+				c.strokeRect(0,campo.height*79/240,campo.height*2/15,campo.height*41/120);
+				c.strokeRect(campo.width,campo.height*79/240,-campo.height*2/15,campo.height*41/120);
+				//Escanteios:
+				c.beginPath();
+				c.arc(0,0,campo.height/40,-Math.PI*0.5,Math.PI);
+				c.stroke();
+				c.beginPath();
+				c.arc(campo.width,0,campo.height/40,Math.PI*0.5,0);
+				c.stroke();
+				c.beginPath();
+				c.arc(0,campo.height,campo.height/40,1.5*Math.PI,Math.PI);
+				c.stroke();
+				c.beginPath();
+				c.arc(campo.width,campo.height,campo.height/40,0,1.5*Math.PI);
+				c.stroke();
+				c.strokeRect(0,0,campo.width,campo.height);
+				var base64 =campo.toDataURL();
+				campo.style.backgroundImage = "url("+base64+")";
+		}
+		desenhar_Campo(c);
+		document.getElementById("Trave1").height=campo.height/4;
+		document.getElementById("Trave1").width=campo.width/8;
+		document.getElementById("Trave2").height=campo.height/4;
+		document.getElementById("Trave2").width=campo.width/8;
+		//Parte 2- Jogadores
+		function desenhaJogador(vetor,posicao,c){
+			c.fillStyle=vetor[posicao].corbase;
+			c.beginPath();
+			c.arc(vetor[posicao].x,vetor[posicao].y,campo.height/40,0,2*Math.PI);
+			c.fill();
+			c.beginPath();
+			c.strokeStyle=vetor[posicao].cor2;
+			c.lineWidth = 1.5;
+			c.arc(vetor[posicao].x,vetor[posicao].y,campo.height/40,0,2*Math.PI);
+			c.stroke();
+			c.fillStyle=vetor[posicao].cor2;
+			c.font="25px serif";
+			c.fillText(vetor[posicao].numero,vetor[posicao].x-13,vetor[posicao].y+8);
+			c.fillStyle="Yellow";
+			c.font="20px serif";
+			//Função obtida por ajuste de curvas
+			var cte=18.7919*Math.log(1.209945*vetor[posicao].nome.length);
+			c.fillText(vetor[posicao].nome,vetor[posicao].x-cte,vetor[posicao].y+campo.height/20);
+		}
+		
+		function desenhaJogadorComCoordenadas(vetor,posicao,c,x_final,y_final){
+			c.fillStyle=vetor[posicao].corbase;
+			c.beginPath();
+			c.arc(x_final,y_final,campo.height/40,0,2*Math.PI);
+			c.fill();
+			c.beginPath();
+			c.strokeStyle=vetor[posicao].cor2;
+			c.lineWidth = 1.5;
+			c.arc(x_final,y_final,campo.height/40,0,2*Math.PI);
+			c.stroke();
+			c.fillStyle=vetor[posicao].cor2;
+			c.font="25px serif";
+			c.fillText(vetor[posicao].numero,x_final-13,y_final+8);
+			c.fillStyle="Yellow";
+			c.font="20px serif";
+			//Função obtida por ajuste de curvas
+			var cte=18.7919*Math.log(1.209945*vetor[posicao].nome.length);
+			c.fillText(vetor[posicao].nome,x_final-cte,y_final+campo.height/20);
+		}
+
+		function hex_to_dec(id){
+			var vetor=document.getElementById(id).value.substring(1);
+			var rgb=[],string="";
+			var cont=0;
+			for(var i=0;i<6;i++){
+				string=string+vetor[i];
+				if(i%2!=0){
+					rgb[cont]=string;
+					string="";
+					cont++;
+				}
+			}
+			var novo_rgb=[];
+			var letras="abcdef";
+			for(var j=0;j<3;j++){
+				var dezenas=undefined,unidades=undefined;
+				for(var k=0;k<6;k++){
+					if(rgb[j][0]==letras[k]){
+						dezenas=parseInt(10+k);
+					}
+					if(rgb[j][1]==letras[k]){
+						unidades=parseInt(10+k);
+					}
+				}
+				if(dezenas==undefined){
+					dezenas=parseInt(rgb[j][0])
+				}
+				if(unidades==undefined){
+					unidades=parseInt(rgb[j][1])
+				}
+				novo_rgb[j]=16*dezenas+unidades;
+			}
+			return novo_rgb;
+		}
+		function atualizar_corbase1(){
+			var atual=tipoPrancheta();
+			c.clearRect(0,0,campo.width,campo.height);
+			movendo=false;
+				
+			for(var i=0;i<11;i++){
+				atual.time1[i].corbase=document.getElementById("color1").value;
+				if(atual.teste>0){
+				desenhaJogador(atual.time1,i,c);
+			}
+				if(atual.teste_2>0){
+					distribuir_jogadores2(c);
+					}
+				}
+				if(atual.teste_bola>0){
+	    	c.drawImage(images[0],atual.cx,atual.cy,campo.height/24,campo.height/24);
+	    }
+	    //Redesenhando Linhas e Vetores
+				for(var i=0;i<atual.linhas.length;i++){
+				c.beginPath();
+				c.strokeStyle=atual.cores_linha[i];
+				c.lineWidth=atual.espessuras[i];
+				c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+				c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+				c.stroke();
+				if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+			}
+			//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+			}
+			if(atual.animada){
+						atual.dadosCena.cena[atual.dadosCena.cena_atual-1].time1[0].corbase=document.getElementById("color1").value;
+				}
+			}
+		function atualizar_cor2(){
+			var atual=tipoPrancheta();
+			movendo=false;
+			c.clearRect(0,0,campo.width,campo.height);
+			for(var i=0;i<11;i++){
+				atual.time1[i].cor2=document.getElementById("color2").value;
+				if(atual.teste>0){
+				desenhaJogador(atual.time1,i,c);
+			}
+				if(atual.teste_2>0){
+					distribuir_jogadores2(c);
+				}
+			}
+			if(atual.teste_bola>0){
+	    	c.drawImage(images[0],atual.cx,atual.cy,campo.height/24,campo.height/24);
+	    }
+	    //Redesenhando Linhas e Vetores
+				for(var i=0;i<atual.linhas.length;i++){
+				c.beginPath();
+				c.strokeStyle=atual.cores_linha[i];
+				c.lineWidth=atual.espessuras[i];
+				c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+				c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+				c.stroke();
+				if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+			}
+			//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+			}
+		}
+		function atualizar_cor3(){
+			movendo=false;
+			c.clearRect(0,0,campo.width,campo.height);
+			for(var i=0;i<11;i++){
+				atual.time2[i].corbase=document.getElementById("color3").value;
+				if(atual.teste_2>0){
+				desenhaJogador(atual.time2,i,c);
+			}
+				if(atual.teste>0){
+					distribuir_jogadores1(c);
+				}
+			}
+			if(atual.teste_bola>0){
+	    	c.drawImage(images[0],atual.cx,atual.cy,campo.height/24,campo.height/24);
+	    }
+	    //Redesenhando Linhas e Vetores
+				for(var i=0;i<atual.linhas.length;i++){
+				c.beginPath();
+				c.strokeStyle=atual.cores_linha[i];
+				c.lineWidth=atual.espessuras[i];
+				c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+				c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+				c.stroke();
+				if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+			}
+			//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+			}
+		}
+		function atualizar_cor4(){
+			var atual=tipoPrancheta();
+			movendo=false;
+			c.clearRect(0,0,campo.width,campo.height);
+			for(var i=0;i<11;i++){
+				atual.time2[i].cor2=document.getElementById("color4").value;
+				if(atual.teste_2>0){
+				desenhaJogador(atual.time2,i,c);
+				if(atual.teste>0){
+					distribuir_jogadores1(c);
+				}
+			}
+		}
+		if(atual.teste_bola>0){
+	    	c.drawImage(images[0],atual.cx,atual.cy,campo.height/24,campo.height/24);
+	    }
+	    //Redesenhando Linhas e Vetores
+				for(var i=0;i<atual.linhas.length;i++){
+				c.beginPath();
+				c.strokeStyle=atual.cores_linha[i];
+				c.lineWidth=atual.espessuras[i];
+				c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+				c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+				c.stroke();
+				if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+			}
+			//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+			}
+			if(atual.animada){
+						atualizar_cor2Cena2();
+			}
+	}
+		var movendo=false;
+		var cor_do_time_clicado;
+		campo.onmousedown = function clique(evento){
+			var atual=tipoPrancheta();
+			var cor_clicada=c.getImageData(evento.pageX-campo.offsetLeft,evento.pageY-campo.offsetTop,1,1).data;
+			var cor_rgb1=hex_to_dec("color1");cor_rgb2=hex_to_dec("color3");
+			if(evento.buttons==1 && atual.teste_bola==1 && (((evento.pageX-campo.offsetLeft)<atual.cx+35 && (evento.pageX-campo.offsetLeft)>atual.cx) && (evento.pageY-campo.offsetTop<atual.cy+35 && evento.pageY-campo.offsetTop>atual.cy))){
+				movendo_bola=true;
+			
+			//Clique Botão Esquerdo
+			}else if(evento.buttons==1 && ((cor_clicada[0]==cor_rgb1[0] && cor_clicada[1]==cor_rgb1[1] && cor_clicada[2]==cor_rgb1[2])||(cor_clicada[0]==cor_rgb2[0] && cor_clicada[1]==cor_rgb2[1] && cor_clicada[2]==cor_rgb2[2]))){
+					cor_do_time_clicado=cor_clicada;//4 posicoes//Clicou em um jogador
+					movendo=true;
+					desenhando_elipse=false;
+					desenhando_line=false;
+					desenhando_vetor=false;
+					for(var i=0;i<11;i++){
+						atual.time1[i].d=Math.sqrt(Math.pow(evento.pageX-campo.offsetLeft-atual.time1[i].x,2)+Math.pow(evento.pageY-campo.offsetTop-atual.time1[i].y,2));
+						atual.time2[i].d=Math.sqrt(Math.pow(evento.pageX-campo.offsetLeft-atual.time2[i].x,2)+Math.pow(evento.pageY-campo.offsetTop-atual.time2[i].y,2));
+				}
+			}else if(desenhando_line==true || desenhando_vetor==true || desenhando_elipse==true){
+					coord_inicialx=evento.pageX-campo.offsetLeft;
+					coord_inicialy=evento.pageY-campo.offsetTop;
+					movimentando=true;
+				}
+			//Opções
+			if(evento.buttons==2){
+			if(atual.teste==1 && atual.teste_2==0){
+				cor_clicada=hex_to_dec("color1");
+			}else if(atual.teste==0 && atual.teste_2==1){
+				cor_clicada=hex_to_dec("color3");
+			}else{
+				if(atual.teste==1 && atual.teste_2==1 && ultimo==0){
+					cor_clicada=hex_to_dec("color1");
+				}else if(atual.teste==1 && atual.teste_2==1 && ultimo==1){
+					cor_clicada=hex_to_dec("color3");
+				}else{
+					cor_clicada=c.getImageData(evento.pageX-campo.offsetLeft,evento.pageY-campo.offsetTop,1,1).data;
+						}
+					}
+				}
+					//Redesenhando Linhas e Vetores
+				for(var i=0;i<atual.linhas.length;i++){
+				c.beginPath();
+				c.strokeStyle=atual.cores_linha[i];
+				c.lineWidth=atual.espessuras[i];
+				c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+				c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+				c.stroke();
+				if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+			}
+			//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+			}
+			if((atual.teste_bola==1) && ((evento.pageX-campo.offsetLeft)>atual.cx+35 || (evento.pageX-campo.offsetLeft<atual.cx) && (evento.pageY-campo.offsetTop>atual.cy+35 || evento.pageY-campo.offsetTop<atual.cy))){
+				//Pegando a Cor
+				var cor_clicada=c.getImageData(evento.pageX-campo.offsetLeft,evento.pageY-campo.offsetTop,1,1).data;
+				var cor_rgb1=hex_to_dec("color1");cor_rgb2=hex_to_dec("color3");
+				if(((cor_clicada[0]==cor_rgb1[0] && cor_clicada[1]==cor_rgb1[1] && cor_clicada[2]==cor_rgb1[2])||(cor_clicada[0]==cor_rgb2[0] && cor_clicada[1]==cor_rgb2[1] && cor_clicada[2]==cor_rgb2[2]))){
+					cor_do_time_clicado=cor_clicada;//4 posicoes//Clicou em um jogador
+					movendo=true;
+					desenhando_elipse=false;
+					desenhando_line=false;
+					desenhando_vetor=false;
+					for(var i=0;i<11;i++){
+						atual.time1[i].d=Math.sqrt(Math.pow(evento.pageX-campo.offsetLeft-atual.time1[i].x,2)+Math.pow(evento.pageY-campo.offsetTop-atual.time1[i].y,2));
+						atual.time2[i].d=Math.sqrt(Math.pow(evento.pageX-campo.offsetLeft-atual.time2[i].x,2)+Math.pow(evento.pageY-campo.offsetTop-atual.time2[i].y,2));
+				}
+			}else if((desenhando_line==true || desenhando_vetor==true || desenhando_elipse==true) && ((cor_clicada[0]==0 && cor_clicada[1]==128 && cor_clicada[2]==0)||(cor_clicada[0]==0 && cor_clicada[1]==100 && cor_clicada[2]==0) || (cor_clicada[0]==245 && cor_clicada[1]==255 && cor_clicada[2]==250))){
+					coord_inicialx=evento.pageX-campo.offsetLeft;
+					coord_inicialy=evento.pageY-campo.offsetTop;
+					movimentando=true;
+				}
+
+			}
+
+			//Redesenhando
+			c.clearRect(0,0,campo.width,campo.height);
+			if(atual.teste_bola==1){
+				c.drawImage(images[0],atual.cx,atual.cy,campo.height/24,campo.height/24);
+			}
+			if(evento.buttons==2 && !((cor_clicada[0]==0 && cor_clicada[1]==128 && cor_clicada[2]==0)||(cor_clicada[0]==0 && cor_clicada[1]==100 && cor_clicada[2]==0)||(cor_clicada[0]==245 && cor_clicada[1]==255 && cor_clicada[2]==250))){
+				for(var i=0;i<11;i++){
+						atual.time1[i].d=Math.sqrt(Math.pow(evento.pageX-campo.offsetLeft-atual.time1[i].x,2)+Math.pow(evento.pageY-campo.offsetTop-atual.time1[i].y,2));
+						atual.time2[i].d=Math.sqrt(Math.pow(evento.pageX-campo.offsetLeft-atual.time2[i].x,2)+Math.pow(evento.pageY-campo.offsetTop-atual.time2[i].y,2));
+				}
+				
+				ordena(atual.time1);
+				ordena(atual.time2);
+				var clic;
+				if(atual.teste>0 && atual.teste_2==0){
+					do{
+						atual.time1[0].numero=prompt("Qual o número deste jogador?");
+						clic=Esta_no_time(atual.time1);
+					}while(isNaN(atual.time1[0].numero) || (atual.time1[0].numero<0 || atual.time1[0].numero>99) || clic==1);
+					do{
+						atual.time1[0].nome=prompt("Qual o nome deste jogador?");
+					}while(!isNaN(atual.time1[0].nome));
+					distribuir_jogadores1(c);
+				}else if(atual.teste==0 && atual.teste_2>0){
+					do{
+						atual.time2[0].numero=prompt("Qual o número deste jogador?");
+						clic=Esta_no_time(atual.time2);
+					}while(isNaN(atual.time2[0].numero) || (atual.time2[0].numero<0 || atual.time2[0].numero>99) || clic==1);
+					do{
+						atual.time2[0].nome=prompt("Qual o nome deste jogador?");
+					}while(!isNaN(atual.time2[0].nome));
+
+					atualizar_corBaseCena2();
+				}else if(atual.teste==1 && atual.teste_2==1){
+					if(atual.time1[0].d<atual.time2[0].d){
+						do{
+						atual.time1[0].numero=prompt("Qual o número deste jogador?");
+						clic=Esta_no_time(atual.time1);
+					}while(isNaN(atual.time1[0].numero) || (atual.time1[0].numero<0 || atual.time1[0].numero>99) || clic==1);
+					do{
+						atual.time1[0].nome=prompt("Qual o nome deste jogador?");
+					}while(!isNaN(atual.time1[0].nome));
+						distribuir_jogadores1();
+					}else if(atual.time2[0].d<atual.time1[0].d){
+						do{
+						atual.time1[0].numero=prompt("Qual o número deste jogador?");
+						clic=Esta_no_time(atual.time2);
+					}while(isNaN(atual.time2[0].numero) || (atual.time2[0].numero<0 || atual.time2[0].numero>99) || clic==1);
+					do{
+						atual.time2[0].nome=prompt("Qual o nome deste jogador?");
+					}while(!isNaN(atual.time2[0].nome));
+						distribuir_jogadores1(c);
+						distribuir_jogadores2(c);
+					}
+				}else if(atual.teste>1 && atual.teste_2>1){
+					if(atual.time1[0].d<atual.time2[0].d){
+						do{
+						atual.time1[0].numero=prompt("Qual o número deste jogador?");
+						clic=Esta_no_time(atual.time1);
+					}while(isNaN(atual.time1[0].numero) || (atual.time2[0].numero<0 || atual.time2[0].numero>99) || clic==1);
+					do{
+						atual.time1[0].nome=prompt("Qual o nome deste jogador?");
+					}while(!isNaN(atual.time1[0].nome));
+						distribuir_jogadores1(c);
+						distribuir_jogadores2(c);
+					}else if(atual.time2[0].d<atual.time1[0].d){
+						do{
+						atual.time2[0].numero=prompt("Qual o número deste jogador?");
+						clic=Esta_no_time(atual.time2);
+					}while(isNaN(atual.time2[0].numero) || atual.time2[0].numero<0 || atual.time2[0].numero>99 || clic==1);
+						do{
+						atual.time2[0].nome=prompt("Qual o nome deste jogador?");
+					}while(!isNaN(atual.time2[0].nome));
+						distribuir_jogadores1(c);
+						distribuir_jogadores2(c);
+					}
+				}
+			}
+			for(var i=0;i<atual.linhas.length;i++){
+						c.beginPath();
+						c.strokeStyle=atual.cores_linha[i];
+						c.lineWidth=atual.espessuras[i];
+						c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+						c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+						c.stroke();
+						if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+				}
+				//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+
+			}
+			separa();
+			}	
+
+			function ordena(vetor){
+				var aux;
+				for(var i=0;i<11;i++){
+					for(var j=i+1;j<11;j++){
+						if(vetor[i].d>vetor[j].d){
+							aux=vetor[i];
+							vetor[i]=vetor[j];
+							vetor[j]=aux;
+						}
+					}
+				}
+			}
+
+			campo.onmouseup = function soltar(evento){
+				var atual=tipoPrancheta();
+			c.clearRect(0,0,campo.width,campo.height);
+			if(movendo==true){
+				movendo=false;
+			}else if(movendo_bola==true){
+				movendo_bola=false;
+			}
+			if(atual.teste_bola==1){
+				c.drawImage(images[0],atual.cx,atual.cy,campo.height/24,campo.height/24);
+			}
+			if(ultimo_botao==1){
+					desenhando_line=true;
+				}else if(ultimo_botao==2){
+					desenhando_vetor=true;
+				}else if(ultimo_botao==3){
+					desenhando_elipse=true;
+				}
+			if(movimentando==true && (desenhando_line==true || desenhando_vetor==true)){
+				c.beginPath();
+				var x;
+				c.strokeStyle=cor_das_marcacoes;
+				c.lineWidth=espessura_das_linhas;
+				c.moveTo(coord_inicialx,coord_inicialy);
+				c.lineTo(coord_finalx,coord_finaly);
+				c.stroke();
+				if(desenhando_vetor==true){
+					c.beginPath();
+					c.fillStyle=cor_das_marcacoes;
+					c.lineWidth=espessura_das_linhas;
+					c.moveTo(coord_finalx,coord_finaly);
+					var angulo=Math.atan((coord_finaly-coord_inicialy)/(coord_finalx-coord_inicialx));
+					var k=Math.sign(coord_finalx-coord_inicialx);
+					if(k==-1){
+						angulo=Math.PI+angulo;
+					}
+					c.lineTo(coord_finalx-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),coord_finaly+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+					c.lineTo(coord_finalx-10*c.lineWidth*Math.sin(Math.PI/3+angulo),coord_finaly+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+					c.fill();
+					x=1;
+				}else{
+					x=0;
+				}
+				atual.setas.push(x);
+				atual.linhas.push([coord_inicialx,coord_inicialy,coord_finalx,coord_finaly]);
+				atual.formas.push([[coord_inicialx,coord_inicialy,coord_finalx,coord_finaly],x]);
+				atual.cores_linha.push(cor_das_marcacoes);
+				atual.espessuras.push(espessura_das_linhas);
+			}else if(movimentando==true && desenhando_elipse==true){
+				c.clearRect(0,0,campo.width,campo.height);
+				c.beginPath(); 
+				c.strokeStyle=cor_das_marcacoes;
+				c.lineWidth=espessura_das_linhas;
+				var raiox=(evento.pageX-campo.offsetLeft-coord_inicialx)*0.5;
+				var raioy=(evento.pageY-campo.offsetTop-coord_inicialy)*0.5;
+				c.ellipse(coord_inicialx+raiox,coord_inicialy+raioy,Math.abs(raiox),Math.abs(raioy),0,0,2*Math.PI);
+				c.stroke();
+				atual.elipses.push([coord_inicialx+raiox,coord_inicialy+raioy,raiox,raioy]);
+				atual.formas.push([[coord_inicialx+raiox,coord_inicialy+raioy,raiox,raioy],2]);
+				atual.cores_elipse.push(cor_das_marcacoes);
+				atual.espessura_elipse.push(espessura_das_linhas);
+				//desenhar_Campo();
+		}
+		//Redesenhando Linhas e Vetores
+				for(var i=0;i<atual.linhas.length;i++){
+				c.beginPath();
+				c.strokeStyle=atual.cores_linha[i];
+				c.lineWidth=atual.espessuras[i];
+				c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+				c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+				c.stroke();
+				if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+			}
+			//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+			}
+			if(atual.teste>0){
+				distribuir_jogadores1(c);
+			}
+			if(atual.teste_2>0){
+				distribuir_jogadores2(c);
+			}
+		separa();
+		movimentando=false;
+		movendo_bola=false;
+	}
+		campo.onmousemove = function arrastar(evento){
+			var atual=tipoPrancheta();
+			//Arrastar a Bola
+			if(evento.buttons==1 && movendo_bola==true){
+				atual.cx=evento.pageX-campo.offsetLeft;
+				atual.cy=evento.pageY-campo.offsetTop;
+				c.clearRect(0,0,campo.width,campo.height);
+					if(atual.teste>0 && atual.teste_2>0){
+						distribuir_jogadores1(c);
+						distribuir_jogadores2(c);
+					}else if(atual.teste>0 && atual.teste_2==0){
+						distribuir_jogadores1(c);
+					}else if(atual.teste_2>0 && atual.teste==0){
+						distribuir_jogadores2(c);
+					}
+					Render();
+					for(var i=0;i<atual.linhas.length;i++){
+						c.beginPath();
+						c.strokeStyle=atual.cores_linha[i];
+						c.lineWidth=atual.espessuras[i];
+						c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+						c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+						c.stroke();
+						if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((linhas[i][3]-linhas[i][1])/(linhas[i][2]-linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+							if(atual.setas[i]==true){
+								c.beginPath();
+								c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+								c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+								var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+								var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+									if(k==-1){
+										angulo=Math.PI+angulo;
+									}
+								c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+								c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+								c.fill();
+					}
+				}
+			}
+
+				//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+
+			}
+		}
+			}
+			else if(movendo==true && evento.buttons==1){
+				c.clearRect(0,0,campo.width,campo.height);
+				//Arrastar Jogadores
+				ordena(atual.time1);
+				ordena(atual.time2);
+				var novo_x = evento.pageX - campo.offsetLeft;
+				var novo_y = evento.pageY - campo.offsetTop;
+					if(cor_do_time_clicado[0]==hex_to_dec("color1")[0] && cor_do_time_clicado[1]==hex_to_dec("color1")[1] && cor_do_time_clicado[2]==hex_to_dec("color1")[2]){
+						document.getElementById("Instrucoes").innerHTML="Arraste para mover o jogador "+ atual.time1[0].nome;
+						document.getElementById("Instrucoes").style.left="44.44%";
+							atual.time1[0].x=novo_x;
+							atual.time1[0].y=novo_y;			
+					}else{
+						document.getElementById("Instrucoes").innerHTML="Arraste para mover o jogador "+ atual.time2[0].nome;
+						document.getElementById("Instrucoes").style.left="44.44%";
+						atual.time2[0].x=novo_x;
+						atual.time2[0].y=novo_y;
+					}
+
+					if(atual.teste>0 && atual.teste_2>0){
+						distribuir_jogadores1(c);
+						distribuir_jogadores2(c);
+					}else if(atual.teste>0 && atual.teste_2==0){
+						distribuir_jogadores1(c);
+					}else{
+						distribuir_jogadores2(c);
+						}
+
+					for(var i=0;i<atual.linhas.length;i++){
+						c.beginPath();
+						c.strokeStyle=atual.cores_linha[i];
+						c.lineWidth=atual.espessuras[i];
+						c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+						c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+						c.stroke();
+						if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+							if(atual.setas[i]==true){
+								c.beginPath();
+								c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+								c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+								var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+								var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+									if(k==-1){
+										angulo=Math.PI+angulo;
+									}
+								c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+								c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+								c.fill();
+					}
+				}
+			}
+
+				//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+
+			}
+		}
+	}
+			//Desenhar Marcações
+			if(movimentando==true && (desenhando_line==true || desenhando_vetor==true)){
+				coord_finalx=evento.pageX-campo.offsetLeft;
+				coord_finaly=evento.pageY-campo.offsetTop;
+				c.clearRect(0,0,campo.width,campo.height);//Efeito de Desenho
+				c.beginPath();
+				c.strokeStyle=cor_das_marcacoes;
+				c.lineWidth=espessura_das_linhas;
+				c.moveTo(coord_inicialx,coord_inicialy);
+				c.lineTo(coord_finalx,coord_finaly);
+				c.stroke();
+				//Redesenhando Linhas e Vetores
+			for(var i=0;i<atual.linhas.length;i++){
+				c.beginPath();
+				c.strokeStyle=atual.cores_linha[i];
+				c.lineWidth=atual.espessuras[i];
+				c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+				c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+				c.stroke();
+				if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+			}
+			//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+
+			}
+		if(atual.teste>0){
+			distribuir_jogadores1(c);
+		}
+		if(atual.teste_2>0){
+			distribuir_jogadores2(c);
+		}
+	}
+	if(desenhando_elipse==true && movimentando==true){
+				c.clearRect(0,0,campo.width,campo.height);
+				c.beginPath(); 
+				c.strokeStyle=cor_das_marcacoes;
+				c.lineWidth=espessura_das_linhas;
+				var raiox=(evento.pageX-campo.offsetLeft-coord_inicialx)*0.5;
+				var raioy=(evento.pageY-campo.offsetTop-coord_inicialy)*0.5;
+				c.ellipse(coord_inicialx+raiox,coord_inicialy+raioy,Math.abs(raiox),Math.abs(raioy),0,0,2*Math.PI);
+				c.stroke();
+				//Redesenhando Linhas e Vetores
+				for(var i=0;i<atual.linhas.length;i++){
+				c.beginPath();
+				c.strokeStyle=atual.cores_linha[i];
+				c.lineWidth=atual.espessuras[i];
+				c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+				c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+				c.stroke();
+				if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+			}
+			//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+			}
+		if(atual.teste>0){
+			distribuir_jogadores1(c);
+		}
+		if(atual.teste_2>0){
+			distribuir_jogadores2(c);
+		}
+	}
+}
+		function Apagar1(){
+			var atual=tipoPrancheta();
+			c.clearRect(0,0,campo.width,campo.height);
+			if(document.getElementById("Times").value!=0){
+			for(var i=0;i<11;i++){
+			atual.time1[i]={
+				id:i,
+				x:equipes[time_selecionado+1][i].x,
+				y:equipes[time_selecionado+1][i].y,
+				d:undefined,
+				numero:"",//String
+				nome:"JOGADOR"+parseInt(i+1),//String
+				corbase:"#FF0000",//StringHex
+				cor2:"#FFFFFF",//StringHex
+			};
+		}
+	}else{
+		for(var i=0;i<11;i++){
+			atual.time1[i]={
+				id:i,
+				x:undefined,
+				y:undefined,
+				d:undefined,
+				numero:"",//String
+				nome:"JOGADOR"+parseInt(i+1),//String
+				corbase:"#FF0000",//StringHex
+				cor2:"#FFFFFF",//StringHex
+			};
+		}
+	}
+			document.getElementById("color1").value="#FF0000";
+			document.getElementById("color2").value="#FFFFFF";
+		atual.time1[0].x=campo.width/30;//40
+		atual.time1[0].y=campo.height/2;//300
+		if(document.getElementById("Formacoes1").value==1){
+				atual.time1[1].x=campo.width/4;//300
+				atual.time1[1].y=campo.height*11/12;//550
+				atual.time1[4].x=campo.width/4;//300
+				atual.time1[4].y=campo.height/12;//50
+				atual.time1[2].x=campo.width/6;//200
+				atual.time1[2].y=campo.height*2/3;//800
+				atual.time1[3].x=campo.width/6;//200
+				atual.time1[3].y=campo.height/3;//200
+				atual.time1[5].x=campo.width/4;//300
+				atual.time1[5].y=campo.height/2;//300
+				atual.time1[6].x=campo.width*11/24;//550
+				atual.time1[6].y=campo.height/3;//200
+				atual.time1[7].x=campo.width*11/24;//550
+				atual.time1[7].y=campo.height*2/3;//400
+				atual.time1[8].x=campo.width*7/12;//700
+				atual.time1[8].y=campo.height*11/12;//550
+				atual.time1[9].x=campo.width*7/12//700
+				atual.time1[9].y=campo.height/12;//50
+				atual.time1[10].x=campo.width*17/24;//850
+				atual.time1[10].y=campo.height/2;//300
+			}else if(document.getElementById("Formacoes1").value==2){
+				atual.time1[1].x=campo.width/4;
+				atual.time1[1].y=campo.height*11/12;
+				atual.time1[4].x=campo.width/4;
+				atual.time1[4].y=campo.height/12;
+				atual.time1[2].x=campo.width/6;
+				atual.time1[2].y=campo.height*2/3;
+				atual.time1[3].x=campo.width/6;
+				atual.time1[3].y=campo.height/3;
+				atual.time1[5].x=campo.width*9/25;
+				atual.time1[5].y=campo.height*2/3;
+				atual.time1[6].x=campo.width*9/25;//450
+				atual.time1[6].y=campo.height/3;
+				atual.time1[7].x=campo.width*13/25;//650
+				atual.time1[7].y=campo.height/2;
+				atual.time1[8].x=campo.width*13/25;
+				atual.time1[8].y=campo.height*11/12;
+				atual.time1[9].x=campo.width*13/25;
+				atual.time1[9].y=campo.height/12;
+				atual.time1[10].x=campo.width*17/24;//850
+				atual.time1[10].y=campo.height/2;//300
+			}else if(document.getElementById("Formacoes1").value==3){
+				atual.time1[1].x=campo.width/4;//300
+				atual.time1[1].y=campo.height*11/12;//550
+				atual.time1[4].x=campo.width/4;//300
+				atual.time1[4].y=campo.height/12;//50
+				atual.time1[2].x=campo.width/6;//200
+				atual.time1[2].y=campo.height*2/3;//400
+				atual.time1[3].x=campo.width/6;//200
+				atual.time1[3].y=campo.height/3;//200
+				atual.time1[5].x=campo.width*9/25;//450
+				atual.time1[5].y=campo.height*2/3;//400
+				atual.time1[6].x=campo.width*9/25;//450
+				atual.time1[6].y=campo.height/3;//200
+				atual.time1[7].x=campo.width/2;//600
+				atual.time1[7].y=campo.height/2;//300
+				atual.time1[8].x=campo.width*7/12//700
+				atual.time1[8].y=campo.height*11/12;//550
+				atual.time1[9].x=campo.width*7/12;//700
+				atual.time1[9].y=campo.height/12;//50
+				atual.time1[10].x=campo.width*17/24;//850
+				atual.time1[10].y=campo.height/2;//300
+			}else if(document.getElementById("Formacoes1").value==4){
+				atual.time1[1].x=campo.width/4;//300
+				atual.time1[1].y=campo.height*11/12;//550
+				atual.time1[4].x=campo.width/4;//300
+				atual.time1[4].y=campo.height/12;//50
+				atual.time1[2].x=campo.width/6;//200
+				atual.time1[2].y=campo.height*2/3;//400
+				atual.time1[3].x=campo.width/6;//200
+				atual.time1[3].y=campo.height/3;//200
+				atual.time1[5].x=campo.width/3;//400
+				atual.time1[5].y=campo.height/2;//300
+				atual.time1[6].x=campo.width*11/24;//550
+				atual.time1[6].y=campo.height/6;
+				atual.time1[7].x=campo.width*11/24;//550
+				atual.time1[7].y=campo.height*5/6;//500
+				atual.time1[8].x=campo.width*13/25;//650
+				atual.time1[8].y=campo.height/2;//300
+				atual.time1[9].x=campo.width*17/24;//850
+				atual.time1[9].y=campo.height/3;//200
+				atual.time1[10].x=campo.width*17/24;//850
+				atual.time1[10].y=campo.height*2/3;//400
+			}else if(document.getElementById("Formacoes1").value==5){
+				atual.time1[1].x=campo.width/4;//300
+				atual.time1[1].y=campo.height*11/12;//550
+				atual.time1[4].x=campo.width/4;//300
+				atual.time1[4].y=campo.height/12;//50
+				atual.time1[2].x=campo.width/6;//200
+				atual.time1[2].y=campo.height*2/3;//400
+				atual.time1[3].x=campo.width/6;//200
+				atual.time1[3].y=campo.height/3;//200
+				atual.time1[5].x=campo.width/3;//400
+				atual.time1[5].y=campo.height/2;//300
+				atual.time1[6].x=campo.width*11/24;//550
+				atual.time1[6].y=campo.height/6;//100
+				atual.time1[7].x=campo.width*11/24;//550
+				atual.time1[7].y=campo.height*5/6;//500
+				atual.time1[8].x=campo.width*7/12//700
+				atual.time1[8].y=campo.height/3;//200
+				atual.time1[9].x=campo.width*7/12//700
+				atual.time1[9].y=campo.height*2/3;//400
+				atual.time1[10].x=campo.width*17/24;//850
+				atual.time1[10].y=campo.height/2;
+			}else if(document.getElementById("Formacoes1").value==6){
+				atual.time1[1].x=campo.width/4;//300
+				atual.time1[1].y=campo.height*11/12;//550
+				atual.time1[4].x=campo.width/4;//300
+				atual.time1[4].y=campo.height/12;//50
+				atual.time1[2].x=campo.width/6;//200
+				atual.time1[2].y=campo.height*2/3;//400
+				atual.time1[3].x=campo.width/6;//200
+				atual.time1[3].y=campo.height/3;//200
+				atual.time1[5].x=campo.width*9/25;//450
+				atual.time1[5].y=campo.height*2/3;//400
+				atual.time1[6].x=campo.width*9/25;//450
+				atual.time1[6].y=campo.height/3;//200
+				atual.time1[7].x=campo.width*11/24;//550
+				atual.time1[7].y=campo.height/6;//100
+				atual.time1[8].x=campo.width*11/24;//550
+				atual.time1[8].y=campo.height*5/6;//500
+				atual.time1[9].x=campo.width*5/8;//750
+				atual.time1[9].y=campo.height/3;//200
+				atual.time1[10].x=campo.width*5/8;//750
+				atual.time1[10].y=campo.height*2/3;//400
+			}else if(document.getElementById("Formacoes1").value==7){
+				atual.time1[1].x=campo.width/6;//200
+				atual.time1[1].y=campo.height/6;//100
+				atual.time1[4].x=campo.width/6;//200
+				atual.time1[4].y=campo.height*5/6;//500
+				atual.time1[2].x=campo.width/4;//300
+				atual.time1[2].y=campo.height/2;//300
+				atual.time1[3].x=campo.width*11/24;//550
+				atual.time1[3].y=campo.height*5/6;//500
+				atual.time1[5].x=campo.width*11/24;//550
+				atual.time1[5].y=campo.height/12;//50
+				atual.time1[6].x=campo.width*9/25;//450
+				atual.time1[6].y=campo.height/3;//200
+				atual.time1[7].x=campo.width*9/25;//450
+				atual.time1[7].y=campo.height*2/3;//400
+				atual.time1[8].x=campo.width*5/8;//750
+				atual.time1[8].y=campo.height*11/12;//550
+				atual.time1[9].x=campo.width*5/8;//750
+				atual.time1[9].y=campo.height/12;//50
+				atual.time1[10].x=campo.width*17/24;//850
+				atual.time1[10].y=campo.height/2;//300
+			}else if(document.getElementById("Formacoes1").value==8){
+				atual.time1[1].x=campo.width/6;//200
+				atual.time1[1].y=campo.height/6;//100
+				atual.time1[4].x=campo.width/6;//200
+				atual.time1[4].y=campo.height*5/6;//500
+				atual.time1[2].x=campo.width/4;//300
+				atual.time1[2].y=campo.height/2;//300
+				atual.time1[3].x=campo.width*11/24;//550
+				atual.time1[3].y=campo.height*5/6;//500
+				atual.time1[5].x=campo.width*11/24;//550
+				atual.time1[5].y=campo.height/12;//50
+				atual.time1[6].x=campo.width*9/25;//450
+				atual.time1[6].y=campo.height/3;//200
+				atual.time1[7].x=campo.width*9/25;//450
+				atual.time1[7].y=campo.height*2/3;//400
+				atual.time1[8].x=campo.width*13/25;//650
+				atual.time1[8].y=campo.height/2;//300
+				atual.time1[9].x=campo.width*5/8;//750
+				atual.time1[9].y=campo.height/3;//200
+				atual.time1[10].x=campo.width*5/8;//750
+				atual.time1[10].y=campo.height*2/3;//400
+			}
+		atual.teste=0;
+		//teste_2=0;
+		if(atual.teste_2>0){
+			ultimo=1;
+		}
+
+		document.getElementById("botao1").style.display="block";
+		document.getElementById("Instrucoes").innerHTML="Linha de Instruções";
+		document.getElementById("Instrucoes").style.left="47.62%";
+		if(atual.teste_2>0){
+			distribuir_jogadores2(c);
+		}
+		for(var i=0;i<atual.linhas.length;i++){
+						c.beginPath();
+						c.strokeStyle=atual.cores_linha[i];
+						c.lineWidth=atual.espessuras[i];
+						c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+						c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+						c.stroke();
+						if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+				}
+				//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+
+			}
+		}
+		function Apagar2(){
+			c.clearRect(0,0,campo.width,campo.height);
+		if(document.getElementById("Times").value!=0){
+			for(var i=0;i<11;i++){
+			atual.time2[i]={
+				id:i,
+				x:equipes[time_selecionado+1][i].x,
+				y:equipes[time_selecionado+1][i].y,
+				d:undefined,
+				numero:"",//String
+				nome:"JOGADOR"+parseInt(i+1),//String
+				corbase:"#FF0000",//StringHex
+				cor2:"#FFFFFF",//StringHex
+			};
+		}
+	}else{
+		for(var i=0;i<11;i++){
+			atual.time2[i]={
+				id:i,
+				x:undefined,
+				y:undefined,
+				d:undefined,
+				numero:"",//String
+				nome:"JOGADOR"+parseInt(i+1),//String
+				corbase:"#0000FF",//StringHex
+				cor2:"#FFFFFF",//StringHex
+			};
+		}
+	}
+			document.getElementById("color3").value="#0000FF";
+			document.getElementById("color4").value="#FFFFFF";
+		atual.time2[0].x=campo.width*29/30;//1160
+		atual.time2[0].y=campo.height/2;//300
+		if (document.getElementById("Formacoes2").value == "1") {
+				atual.time2[1].x=campo.width/4;//300
+				atual.time2[1].y=campo.height*11/12;//550
+				atual.time2[4].x=campo.width/4;//300
+				atual.time2[4].y=campo.height/12;//50
+				atual.time2[2].x=campo.width/6;//200
+				atual.time2[2].y=campo.height*2/3;//800
+				atual.time2[3].x=campo.width/6;//200
+				atual.time2[3].y=campo.height/3;//200
+				atual.time2[5].x=campo.width/4;//300
+				atual.time2[5].y=campo.height/2;//300
+				atual.time2[6].x=campo.width*11/24;//550
+				atual.time2[6].y=campo.height/3;//200
+				atual.time2[7].x=campo.width*11/24;//550
+				atual.time2[7].y=campo.height*2/3;//400
+				atual.time2[8].x=campo.width*7/12;//700
+				atual.time2[8].y=campo.height*11/12;//550
+				atual.time2[9].x=campo.width*7/12//700
+				atual.time2[9].y=campo.height/12;//50
+				atual.time2[10].x=campo.width*17/24;//850
+				atual.time2[10].y=campo.height/2;//300
+    	}else if(document.getElementById("Formacoes2").value == "2"){
+    		atual.time2[1].x=campo.width/4;//300
+			atual.time2[1].y=campo.height*11/12;//550
+			atual.time2[4].x=campo.width/4;//300
+			atual.time2[4].y=campo.height/12;//50
+			atual.time2[2].x=campo.width/6;//200
+			atual.time2[2].y=campo.height*2/3;//400
+			atual.time2[3].x=campo.width/6;//200
+			atual.time2[3].y=campo.height/3;//200
+			atual.time2[5].x=campo.width*9/25;//450
+			atual.time2[5].y=campo.height*2/3;//400
+			atual.time2[6].x=campo.width*9/25;//450
+			atual.time2[6].y=campo.height/3;//200
+			atual.time2[7].x=campo.width*13/25;//650
+			atual.time2[7].y=campo.height/2;//300
+			atual.time2[8].x=campo.width*13/25;//650
+			atual.time2[8].y=campo.height*11/12;//550
+			atual.time2[9].x=campo.width*13/25;//650
+			atual.time2[9].y=campo.height/12;//50
+			atual.time2[10].x=campo.width*17/24;//850
+			atual.time2[10].y=campo.height/2;//300
+    	}else if(document.getElementById("Formacoes2").value == "3"){
+    		atual.time2[1].x=campo.width/4;//300
+			atual.time2[1].y=campo.height*11/12;//550
+			atual.time2[4].x=campo.width/4;//300
+			atual.time2[4].y=campo.height/12;//50
+			atual.time2[2].x=campo.width/6;//200
+			atual.time2[2].y=campo.height*2/3;//400
+			atual.time2[3].x=campo.width/6;//200
+			atual.time2[3].y=campo.height/3;//200
+			atual.time2[5].x=campo.width*9/25;//450
+			atual.time2[5].y=campo.height*2/3;//400
+			atual.time2[6].x=campo.width*9/25;//450
+			atual.time2[6].y=campo.height/3;//200
+			atual.time2[7].x=campo.width/2;//600
+			atual.time2[7].y=campo.height/2;//300
+			atual.time2[8].x=campo.width*7/12//700
+			atual.time2[8].y=campo.height*11/12;//550
+			atual.time2[9].x=campo.width*7/12//700
+			atual.time2[9].y=campo.height/12;//50
+			atual.time2[10].x=campo.width*17/24;//850
+			atual.time2[10].y=campo.height/2;//300
+    	}else if(document.getElementById("Formacoes2").value == "4"){
+    		atual.time2[1].x=campo.width/4;//300
+			atual.time2[1].y=campo.height*11/12;//550
+			atual.time2[4].x=campo.width/4;//300
+			atual.time2[4].y=campo.height/12;//50
+			atual.time2[2].x=campo.width/6;//200
+			atual.time2[2].y=campo.height*2/3;//400
+			atual.time2[3].x=campo.width/6;//200
+			atual.time2[3].y=campo.height/3;//200
+			atual.time2[5].x=campo.width/3;//400
+			atual.time2[5].y=campo.height/2;//300
+			atual.time2[6].x=campo.width*11/24;//550
+			atual.time2[6].y=campo.height/6;//100
+			atual.time2[7].x=campo.width*11/24;//550
+			atual.time2[7].y=campo.height*5/6;//500
+			atual.time2[8].x=campo.width*13/25;//650
+			atual.time2[8].y=campo.height/2;//300
+			atual.time2[9].x=campo.width*17/24;//850
+			atual.time2[9].y=campo.height/3;//200
+			atual.time2[10].x=campo.width*17/24;//850
+			atual.time2[10].y=campo.height*2/3;//400
+    	}else if(document.getElementById("Formacoes2").value == "5"){
+    		atual.time2[1].x=campo.width/4;//300
+			atual.time2[1].y=campo.height*11/12;//550
+			atual.time2[4].x=campo.width/4;//300
+			atual.time2[4].y=campo.height/12;//50
+			atual.time2[2].x=campo.width/6;//200
+			atual.time2[2].y=campo.height*2/3;//400
+			atual.time2[3].x=campo.width/6;//200
+			atual.time2[3].y=campo.height/3;//200
+			atual.time2[5].x=campo.width/3;//400
+			atual.time2[5].y=campo.height/2;//300
+			atual.time2[6].x=campo.width*11/24;//550
+			atual.time2[6].y=campo.height/6;//100
+			atual.time2[7].x=campo.width*11/24;//550
+			atual.time2[7].y=campo.height*5/6;//500			
+			atual.time2[8].x=campo.width*7/12//700
+			atual.time2[8].y=campo.height/3;//200
+			atual.time2[9].x=campo.width*7/12//700
+			atual.time2[9].y=campo.height*2/3;//400
+			atual.time2[10].x=campo.width*17/24;//850
+			atual.time2[10].y=campo.height/2;//300
+    	}else if(document.getElementById("Formacoes2").value == "6"){
+    		atual.time2[1].x=campo.width/4;//300
+			atual.time2[1].y=campo.height*11/12;//550
+			atual.time2[4].x=campo.width/4;//300
+			atual.time2[4].y=campo.height/12;//50
+			atual.time2[2].x=campo.width/6;//200
+			atual.time2[2].y=campo.height*2/3;//400
+			atual.time2[3].x=campo.width/6;//200
+			atual.time2[3].y=campo.height/3;//200
+			atual.time2[5].x=campo.width*9/25;//450
+			atual.time2[5].y=campo.height*2/3;//400
+			atual.time2[6].x=campo.width*9/25;//450
+			atual.time2[6].y=campo.height/3;//200
+			atual.time2[7].x=campo.width*11/24;//550
+			atual.time2[7].y=campo.height/6;//100
+			atual.time2[8].x=campo.width*11/24;//550
+			atual.time2[8].y=campo.height*5/6;//500
+			atual.time2[9].x=campo.width*5/8;//750
+			atual.time2[9].y=campo.height/3;//200
+			atual.time2[10].x=campo.width*5/8;//750
+			atual.time2[10].y=campo.height*2/3;//400
+	}else if(document.getElementById("Formacoes2").value == "7"){
+		//Linha de Três na Defesa
+			atual.time2[1].x=campo.width/6;//200
+			atual.time2[1].y=campo.height/6;//100
+			atual.time2[4].x=campo.width/6;//200
+			atual.time2[4].y=campo.height*5/6;//500
+			atual.time2[2].x=campo.width/4;//300
+			atual.time2[2].y=campo.height/2;//300
+			atual.time2[3].x=campo.width*11/24;//550
+			atual.time2[3].y=campo.height*5/6;//500
+			atual.time2[5].x=campo.width*11/24;//550
+			atual.time2[5].y=campo.height/12;//50
+			atual.time2[6].x=campo.width*9/25;//450
+			atual.time2[6].y=campo.height/3;//200
+			atual.time2[7].x=campo.width*9/25;//450
+			atual.time2[7].y=campo.height*2/3;//400
+			atual.time2[8].x=campo.width*5/8;//750
+			atual.time2[8].y=campo.height*11/12;//550
+			atual.time2[9].x=campo.width*5/8;//750
+			atual.time2[9].y=campo.height/12;//50
+			atual.time2[10].x=campo.width*17/24;//850
+			atual.time2[10].y=campo.height/2;//300
+	}else if(document.getElementById("Formacoes2").value == "8"){
+		//Linha de Três na Defesa
+			atual.time2[1].x=campo.width/6;//200
+			atual.time2[1].y=campo.height/6;//100
+			atual.time2[4].x=campo.width/6;//200
+			atual.time2[4].y=campo.height*5/6;//500
+			atual.time2[2].x=campo.width/4;//300
+			atual.time2[2].y=campo.height/2;//300
+			atual.time2[3].x=campo.width*11/24;//550
+			atual.time2[3].y=campo.height*5/6;//500
+			atual.time2[5].x=campo.width*11/24;//550
+			atual.time2[5].y=campo.height/12;//50
+			atual.time2[6].x=campo.width*9/25;//450
+			atual.time2[6].y=campo.height/3;//200
+			atual.time2[7].x=campo.width*9/25;//450
+			atual.time2[7].y=campo.height*2/3;//400
+			atual.time2[8].x=campo.width*13/25;//650
+			atual.time2[8].y=campo.height/2;//300
+			atual.time2[9].x=campo.width*5/8;//750
+			atual.time2[9].y=campo.height/3;//200
+			atual.time2[10].x=campo.width*5/8;//750
+			atual.time2[10].y=campo.height*2/3;//400
+	}
+	for(var i=1;i<11;i++){
+				atual.time2[i].x=1200-atual.time2[i].x;
+			}
+		atual.teste_2=0;
+		if(atual.teste>0){
+			ultimo=0;
+		}
+		document.getElementById("botao2").style.display="block";
+		document.getElementById("Instrucoes").innerHTML="Linha de Instruções";
+		document.getElementById("Instrucoes").style.left="47.62%";
+		if(atual.teste>0){
+			distribuir_jogadores1(c);
+		}
+		for(var i=0;i<atual.linhas.length;i++){
+						c.beginPath();
+						c.strokeStyle=atual.cores_linha[i];
+						c.lineWidth=atual.espessuras[i];
+						c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+						c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+						c.stroke();
+						if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+				}
+				//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+
+			}
+			if(Dados.length!=0){
+				
+			}
+		}
+		c.clearRect(0,0,campo.width,campo.height);
+		function distribuir_jogadores1(c){
+			var atual;
+			if(pranchetas[document.getElementById("prancheta").value-1].animada){
+				atual=pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1];
+			}else{
+				atual=pranchetas[document.getElementById("prancheta").value-1];
+			}
+			for(var i=0;i<11;i++){
+						desenhaJogador(atual.time1,i,c);//Prancheta
+					}
+		}
+		function distribuir_jogadores2(c){
+			var atual;
+			if(pranchetas[document.getElementById("prancheta").value-1].animada){
+				atual=pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1];
+			}else{
+				atual=pranchetas[document.getElementById("prancheta").value-1];
+			}
+			for(var i=0;i<11;i++){
+						desenhaJogador(atual.time2,i,c);//Prancheta
+					}
+		}	
+		var ultimo;
+	function cont1(){
+		var atual=tipoPrancheta();
+		atual.teste++;
+			document.getElementById("Instrucoes").innerHTML="Botão Esquerdo do Mouse para arrastar os jogadores e Botão Direito para editar jogador";
+			document.getElementById("Instrucoes").style.left="29.37%";
+		ultimo=0;
+	}
+	function cont2(){
+		var atual=tipoPrancheta();
+		atual.teste_2++;
+		ultimo=1;
+			document.getElementById("Instrucoes").innerHTML="Botão Esquerdo do Mouse para arrastar os jogadores e Botão Direito para editar jogador";
+			document.getElementById("Instrucoes").style.left="29.37%";
+	}
+	// Parte 3 - Formações Táticas
+	$('#Formacoes1').change(function () {
+		var atual=tipoPrancheta();
+		ordenaId(atual.time1);
+			c.clearRect(0,0,campo.width,campo.height);
+			atual.time1[0].x=campo.width/30;//40
+			atual.time1[0].y=campo.height/2;//300
+			if ($('#Formacoes1 option:selected').val() == "1") {
+				atual.time1[1].x=campo.width/4;//300
+				atual.time1[1].y=campo.height*11/12;//550
+				atual.time1[4].x=campo.width/4;//300
+				atual.time1[4].y=campo.height/12;//50
+				atual.time1[2].x=campo.width/6;//200
+				atual.time1[2].y=campo.height*2/3;//800
+				atual.time1[3].x=campo.width/6;//200
+				atual.time1[3].y=campo.height/3;//200
+				atual.time1[5].x=campo.width/4;//300
+				atual.time1[5].y=campo.height/2;//300
+				atual.time1[6].x=campo.width*11/24;//550
+				atual.time1[6].y=campo.height/3;//200
+				atual.time1[7].x=campo.width*11/24;//550
+				atual.time1[7].y=campo.height*2/3;//400
+				atual.time1[8].x=campo.width*7/12;//700
+				atual.time1[8].y=campo.height*11/12;//550
+				atual.time1[9].x=campo.width*7/12//700
+				atual.time1[9].y=campo.height/12;//50
+				atual.time1[10].x=campo.width*17/24;//850
+				atual.time1[10].y=campo.height/2;//300
+	    	}else if($('#Formacoes1 option:selected').val() == "2"){
+	    		atual.time1[1].x=campo.width/4;
+				atual.time1[1].y=campo.height*11/12;
+				atual.time1[4].x=campo.width/4;
+				atual.time1[4].y=campo.height/12;
+				atual.time1[2].x=campo.width/6;
+				atual.time1[2].y=campo.height*2/3;
+				atual.time1[3].x=campo.width/6;
+				atual.time1[3].y=campo.height/3;
+				atual.time1[5].x=campo.width*9/25;
+				atual.time1[5].y=campo.height*2/3;
+				atual.time1[6].x=campo.width*9/25;//450
+				atual.time1[6].y=campo.height/3;
+				atual.time1[7].x=campo.width*13/25;//650
+				atual.time1[7].y=campo.height/2;
+				atual.time1[8].x=campo.width*13/25;
+				atual.time1[8].y=campo.height*11/12;
+				atual.time1[9].x=campo.width*13/25;
+				atual.time1[9].y=campo.height/12;
+				atual.time1[10].x=campo.width*17/24;//850
+				atual.time1[10].y=campo.height/2;//300
+	    	}else if($('#Formacoes1 option:selected').val() == "3"){
+	    		atual.time1[1].x=campo.width/4;//300
+				atual.time1[1].y=campo.height*11/12;//550
+				atual.time1[4].x=campo.width/4;//300
+				atual.time1[4].y=campo.height/12;//50
+				atual.time1[2].x=campo.width/6;//200
+				atual.time1[2].y=campo.height*2/3;//400
+				atual.time1[3].x=campo.width/6;//200
+				atual.time1[3].y=campo.height/3;//200
+				atual.time1[5].x=campo.width*9/25;//450
+				atual.time1[5].y=campo.height*2/3;//400
+				atual.time1[6].x=campo.width*9/25;//450
+				atual.time1[6].y=campo.height/3;//200
+				atual.time1[7].x=campo.width/2;//600
+				atual.time1[7].y=campo.height/2;//300
+				atual.time1[8].x=campo.width*7/12//700
+				atual.time1[8].y=campo.height*11/12;//550
+				atual.time1[9].x=campo.width*7/12;//700
+				atual.time1[9].y=campo.height/12;//50
+				atual.time1[10].x=campo.width*17/24;//850
+				atual.time1[10].y=campo.height/2;//300
+	    	}else if($('#Formacoes1 option:selected').val() == "4"){
+	    		atual.time1[1].x=campo.width/4;//300
+				atual.time1[1].y=campo.height*11/12;//550
+				atual.time1[4].x=campo.width/4;//300
+				atual.time1[4].y=campo.height/12;//50
+				atual.time1[2].x=campo.width/6;//200
+				atual.time1[2].y=campo.height*2/3;//400
+				atual.time1[3].x=campo.width/6;//200
+				atual.time1[3].y=campo.height/3;//200
+				atual.time1[5].x=campo.width/3;//400
+				atual.time1[5].y=campo.height/2;//300
+				atual.time1[6].x=campo.width*11/24;//550
+				atual.time1[6].y=campo.height/6;
+				atual.time1[7].x=campo.width*11/24;//550
+				atual.time1[7].y=campo.height*5/6;//500
+				atual.time1[8].x=campo.width*13/25;//650
+				atual.time1[8].y=campo.height/2;//300
+				atual.time1[9].x=campo.width*17/24;//850
+				atual.time1[9].y=campo.height/3;//200
+				atual.time1[10].x=campo.width*17/24;//850
+				atual.time1[10].y=campo.height*2/3;//400
+	    	}else if($('#Formacoes1 option:selected').val() == "5"){
+	    		atual.time1[1].x=campo.width/4;//300
+				atual.time1[1].y=campo.height*11/12;//550
+				atual.time1[4].x=campo.width/4;//300
+				atual.time1[4].y=campo.height/12;//50
+				atual.time1[2].x=campo.width/6;//200
+				atual.time1[2].y=campo.height*2/3;//400
+				atual.time1[3].x=campo.width/6;//200
+				atual.time1[3].y=campo.height/3;//200
+				atual.time1[5].x=campo.width/3;//400
+				atual.time1[5].y=campo.height/2;//300
+				atual.time1[6].x=campo.width*11/24;//550
+				atual.time1[6].y=campo.height/6;//100
+				atual.time1[7].x=campo.width*11/24;//550
+				atual.time1[7].y=campo.height*5/6;//500
+				atual.time1[8].x=campo.width*7/12//700
+				atual.time1[8].y=campo.height/3;//200
+				atual.time1[9].x=campo.width*7/12//700
+				atual.time1[9].y=campo.height*2/3;//400
+				atual.time1[10].x=campo.width*17/24;//850
+				atual.time1[10].y=campo.height/2;
+	    	}else if($('#Formacoes1 option:selected').val() == "6"){
+	    		atual.time1[1].x=campo.width/4;//300
+				atual.time1[1].y=campo.height*11/12;//550
+				atual.time1[4].x=campo.width/4;//300
+				atual.time1[4].y=campo.height/12;//50
+				atual.time1[2].x=campo.width/6;//200
+				atual.time1[2].y=campo.height*2/3;//400
+				atual.time1[3].x=campo.width/6;//200
+				atual.time1[3].y=campo.height/3;//200
+				atual.time1[5].x=campo.width*9/25;//450
+				atual.time1[5].y=campo.height*2/3;//400
+				atual.time1[6].x=campo.width*9/25;//450
+				atual.time1[6].y=campo.height/3;//200
+				atual.time1[7].x=campo.width*11/24;//550
+				atual.time1[7].y=campo.height/6;//100
+				atual.time1[8].x=campo.width*11/24;//550
+				atual.time1[8].y=campo.height*5/6;//500
+				atual.time1[9].x=campo.width*5/8;//750
+				atual.time1[9].y=campo.height/3;//200
+				atual.time1[10].x=campo.width*5/8;//750
+				atual.time1[10].y=campo.height*2/3;//400
+		}else if($('#Formacoes1 option:selected').val() == "7"){
+			//Linha de Três na Defesa
+				atual.time1[1].x=campo.width/6;//200
+				atual.time1[1].y=campo.height/6;//100
+				atual.time1[4].x=campo.width/6;//200
+				atual.time1[4].y=campo.height*5/6;//500
+				atual.time1[2].x=campo.width/4;//300
+				atual.time1[2].y=campo.height/2;//300
+				atual.time1[3].x=campo.width*11/24;//550
+				atual.time1[3].y=campo.height*5/6;//500
+				atual.time1[5].x=campo.width*11/24;//550
+				atual.time1[5].y=campo.height/12;//50
+				atual.time1[6].x=campo.width*9/25;//450
+				atual.time1[6].y=campo.height/3;//200
+				atual.time1[7].x=campo.width*9/25;//450
+				atual.time1[7].y=campo.height*2/3;//400
+				atual.time1[8].x=campo.width*5/8;//750
+				atual.time1[8].y=campo.height*11/12;//550
+				atual.time1[9].x=campo.width*5/8;//750
+				atual.time1[9].y=campo.height/12;//50
+				atual.time1[10].x=campo.width*17/24;//850
+				atual.time1[10].y=campo.height/2;//300
+		}else if($('#Formacoes1 option:selected').val() == "8"){
+			//Linha de Três na Defesa
+				atual.time1[1].x=campo.width/6;//200
+				atual.time1[1].y=campo.height/6;//100
+				atual.time1[4].x=campo.width/6;//200
+				atual.time1[4].y=campo.height*5/6;//500
+				atual.time1[2].x=campo.width/4;//300
+				atual.time1[2].y=campo.height/2;//300
+				atual.time1[3].x=campo.width*11/24;//550
+				atual.time1[3].y=campo.height*5/6;//500
+				atual.time1[5].x=campo.width*11/24;//550
+				atual.time1[5].y=campo.height/12;//50
+				atual.time1[6].x=campo.width*9/25;//450
+				atual.time1[6].y=campo.height/3;//200
+				atual.time1[7].x=campo.width*9/25;//450
+				atual.time1[7].y=campo.height*2/3;//400
+				atual.time1[8].x=campo.width*13/25;//650
+				atual.time1[8].y=campo.height/2;//300
+				atual.time1[9].x=campo.width*5/8;//750
+				atual.time1[9].y=campo.height/3;//200
+				atual.time1[10].x=campo.width*5/8;//750
+				atual.time1[10].y=campo.height*2/3;//400
+	}
+	if(atual.teste>0){
+
+		distribuir_jogadores1(c);
+	}
+	if(atual.teste_2>0){
+		distribuir_jogadores2(c);
+	}
+});
+	$('#Formacoes2').change(function () {
+		ordenaId(atual.time2);
+			c.clearRect(0,0,campo.width,campo.height);
+    	atual.time2[0].x=campo.width*29/30;//1160
+		atual.time2[0].y=campo.height/2;//300
+		if ($('#Formacoes2 option:selected').val() == "1") {
+			atual.time2[1].x=campo.width/4;//300
+			atual.time2[1].y=campo.height*11/12;//550
+			atual.time2[4].x=campo.width/4;//300
+			atual.time2[4].y=campo.height/12;//50
+			atual.time2[2].x=campo.width/6;//200
+			atual.time2[2].y=campo.height*2/3;//400
+			atual.time2[3].x=campo.width/6;//200
+			atual.time2[3].y=campo.height/3;//200
+			atual.time2[5].x=campo.width/3;//400
+			atual.time2[5].y=campo.height/2;//300
+			atual.time2[6].x=campo.width*11/24;//550
+			atual.time2[6].y=campo.height/3;//200
+			atual.time2[7].x=campo.width*11/24;//550
+			atual.time2[7].y=campo.height*2/3;//400
+			atual.time2[8].x=campo.width*7/12//700
+			atual.time2[8].y=campo.height*11/12;//550
+			atual.time2[9].x=campo.width*7/12//700
+			atual.time2[9].y=campo.height/12;//50
+			atual.time2[10].x=campo.width*17/24;//850
+			atual.time2[10].y=campo.height/2;//300
+    	}else if($('#Formacoes2 option:selected').val() == "2"){
+    		atual.time2[1].x=campo.width/4;//300
+			atual.time2[1].y=campo.height*11/12;//550
+			atual.time2[4].x=campo.width/4;//300
+			atual.time2[4].y=campo.height/12;//50
+			atual.time2[2].x=campo.width/6;//200
+			atual.time2[2].y=campo.height*2/3;//400
+			atual.time2[3].x=campo.width/6;//200
+			atual.time2[3].y=campo.height/3;//200
+			atual.time2[5].x=campo.width*9/25;//450
+			atual.time2[5].y=campo.height*2/3;//400
+			atual.time2[6].x=campo.width*9/25;//450
+			atual.time2[6].y=campo.height/3;//200
+			atual.time2[7].x=campo.width*13/25;//650
+			atual.time2[7].y=campo.height/2;//300
+			atual.time2[8].x=campo.width*13/25;//650
+			atual.time2[8].y=campo.height*11/12;//550
+			atual.time2[9].x=campo.width*13/25;//650
+			atual.time2[9].y=campo.height/12;//50
+			atual.time2[10].x=campo.width*17/24;//850
+			atual.time2[10].y=campo.height/2;//300
+    	}else if($('#Formacoes2 option:selected').val() == "3"){
+    		atual.time2[1].x=campo.width/4;//300
+			atual.time2[1].y=campo.height*11/12;//550
+			atual.time2[4].x=campo.width/4;//300
+			atual.time2[4].y=campo.height/12;//50
+			atual.time2[2].x=campo.width/6;//200
+			atual.time2[2].y=campo.height*2/3;//400
+			atual.time2[3].x=campo.width/6;//200
+			atual.time2[3].y=campo.height/3;//200
+			atual.time2[5].x=campo.width*9/25;//450
+			atual.time2[5].y=campo.height*2/3;//400
+			atual.time2[6].x=campo.width*9/25;//450
+			atual.time2[6].y=campo.height/3;//200
+			atual.time2[7].x=campo.width/2;//600
+			atual.time2[7].y=campo.height/2;//300
+			atual.time2[8].x=campo.width*7/12//700
+			atual.time2[8].y=campo.height*11/12;//550
+			atual.time2[9].x=campo.width*7/12//700
+			atual.time2[9].y=campo.height/12;//50
+			atual.time2[10].x=campo.width*17/24;//850
+			atual.time2[10].y=campo.height/2;//300
+    	}else if($('#Formacoes2 option:selected').val() == "4"){
+    		atual.time2[1].x=campo.width/4;//300
+			atual.time2[1].y=campo.height*11/12;//550
+			atual.time2[4].x=campo.width/4;//300
+			atual.time2[4].y=campo.height/12;//50
+			atual.time2[2].x=campo.width/6;//200
+			atual.time2[2].y=campo.height*2/3;//400
+			atual.time2[3].x=campo.width/6;//200
+			atual.time2[3].y=campo.height/3;//200
+			atual.time2[5].x=campo.width/3;//400
+			atual.time2[5].y=campo.height/2;//300
+			atual.time2[6].x=campo.width*11/24;//550
+			atual.time2[6].y=campo.height/6;//100
+			atual.time2[7].x=campo.width*11/24;//550
+			atual.time2[7].y=campo.height*5/6;//500
+			atual.time2[8].x=campo.width*13/25;//650
+			atual.time2[8].y=campo.height/2;//300
+			atual.time2[9].x=campo.width*17/24;//850
+			atual.time2[9].y=campo.height/3;//200
+			atual.time2[10].x=campo.width*17/24;//850
+			atual.time2[10].y=campo.height*2/3;//400
+    	}else if($('#Formacoes2 option:selected').val() == "5"){
+    		atual.time2[1].x=campo.width/4;//300
+			atual.time2[1].y=campo.height*11/12;//550
+			atual.time2[4].x=campo.width/4;//300
+			atual.time2[4].y=campo.height/12;//50
+			atual.time2[2].x=campo.width/6;//200
+			atual.time2[2].y=campo.height*2/3;//400
+			atual.time2[3].x=campo.width/6;//200
+			atual.time2[3].y=campo.height/3;//200
+			atual.time2[5].x=campo.width/3;//400
+			atual.time2[5].y=campo.height/2;//300
+			atual.time2[6].x=campo.width*11/24;//550
+			atual.time2[6].y=campo.height/6;//100
+			atual.time2[7].x=campo.width*11/24;//550
+			atual.time2[7].y=campo.height*5/6;//500			
+			atual.time2[8].x=campo.width*7/12//700
+			atual.time2[8].y=campo.height/3;//200
+			atual.time2[9].x=campo.width*7/12//700
+			atual.time2[9].y=campo.height*2/3;//400
+			atual.time2[10].x=campo.width*17/24;//850
+			atual.time2[10].y=campo.height/2;//300
+    	}else if($('#Formacoes2 option:selected').val() == "6"){
+    		atual.time2[1].x=campo.width/4;//300
+			atual.time2[1].y=campo.height*11/12;//550
+			atual.time2[4].x=campo.width/4;//300
+			atual.time2[4].y=campo.height/12;//50
+			atual.time2[2].x=campo.width/6;//200
+			atual.time2[2].y=campo.height*2/3;//400
+			atual.time2[3].x=campo.width/6;//200
+			atual.time2[3].y=campo.height/3;//200
+			atual.time2[5].x=campo.width*9/25;//450
+			atual.time2[5].y=campo.height*2/3;//400
+			atual.time2[6].x=campo.width*9/25;//450
+			atual.time2[6].y=campo.height/3;//200
+			atual.time2[7].x=campo.width*11/24;//550
+			atual.time2[7].y=campo.height/6;//100
+			atual.time2[8].x=campo.width*11/24;//550
+			atual.time2[8].y=campo.height*5/6;//500
+			atual.time2[9].x=campo.width*5/8;//750
+			atual.time2[9].y=campo.height/3;//200
+			atual.time2[10].x=campo.width*5/8;//750
+			atual.time2[10].y=campo.height*2/3;//400
+	}else if($('#Formacoes2 option:selected').val() == "7"){
+		//Linha de Três na Defesa
+			atual.time2[1].x=campo.width/6;//200
+			atual.time2[1].y=campo.height/6;//100
+			atual.time2[4].x=campo.width/6;//200
+			atual.time2[4].y=campo.height*5/6;//500
+			atual.time2[2].x=campo.width/4;//300
+			atual.time2[2].y=campo.height/2;//300
+			atual.time2[3].x=campo.width*11/24;//550
+			atual.time2[3].y=campo.height*5/6;//500
+			atual.time2[5].x=campo.width*11/24;//550
+			atual.time2[5].y=campo.height/12;//50
+			atual.time2[6].x=campo.width*9/25;//450
+			atual.time2[6].y=campo.height/3;//200
+			atual.time2[7].x=campo.width*9/25;//450
+			atual.time2[7].y=campo.height*2/3;//400
+			atual.time2[8].x=campo.width*5/8;//750
+			atual.time2[8].y=campo.height*11/12;//550
+			atual.time2[9].x=campo.width*5/8;//750
+			atual.time2[9].y=campo.height/12;//50
+			atual.time2[10].x=campo.width*17/24;//850
+			atual.time2[10].y=campo.height/2;//300
+	}else if($('#Formacoes2 option:selected').val() == "8"){
+		//Linha de Três na Defesa
+			atual.time2[1].x=campo.width/6;//200
+			atual.time2[1].y=campo.height/6;//100
+			atual.time2[4].x=campo.width/6;//200
+			atual.time2[4].y=campo.height*5/6;//500
+			atual.time2[2].x=campo.width/4;//300
+			atual.time2[2].y=campo.height/2;//300
+			atual.time2[3].x=campo.width*11/24;//550
+			atual.time2[3].y=campo.height*5/6;//500
+			atual.time2[5].x=campo.width*11/24;//550
+			atual.time2[5].y=campo.height/12;//50
+			atual.time2[6].x=campo.width*9/25;//450
+			atual.time2[6].y=campo.height/3;//200
+			atual.time2[7].x=campo.width*9/25;//450
+			atual.time2[7].y=campo.height*2/3;//400
+			atual.time2[8].x=campo.width*13/25;//650
+			atual.time2[8].y=campo.height/2;//300
+			atual.time2[9].x=campo.width*5/8;//750
+			atual.time2[9].y=campo.height/3;//200
+			atual.time2[10].x=campo.width*5/8;//750
+			atual.time2[10].y=campo.height*2/3;//400
+	}
+	for(var i=1;i<11;i++){
+				atual.time2[i].x=campo.width*23/24-atual.time2[i].x;
+			}
+			if(atual.teste_2>0){
+				distribuir_jogadores2(c);
+			}
+	if(atual.teste>0){
+		distribuir_jogadores1(c);
+	}
+});
+
+function Esta_no_time(vetor){
+	for(var i=1;i<11;i++){
+		if(vetor[0].numero==vetor[i].numero){
+			return 1;
+		}
+	}
+	return 0;
+} 
+function ordenaId(vetor){
+				var aux;
+				for(var i=0;i<11;i++){
+					for(var j=i+1;j<11;j++){
+						if(vetor[i].id>vetor[j].id){
+							aux=vetor[i];
+							vetor[i]=vetor[j];
+							vetor[j]=aux;
+						}
+					}
+				}
+			}
+// Parte 4 - Bola e Instruções
+var movendo_bola=false;
+var intervalo_bola;
+var images=[];//Vetor de Imagens da Bola
+function LoadImagesAndRender(){
+	images.push('data:image/bmp;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAVpSURBVFhH7VdbSFRdFD6jqVmTt7zFlIFamoGShiiRQ2E+eH9UsSJFIbTyij0ojIThPPgQWBiIWGiloqDgBXvIhikjNMXsTbFwnIeUfBiZsttqffs/k41jOo2/b36w2XPO7L3WOmt/67KlXexip5GamiqVlJRIYWFhkr+/v+Tl5SXt2bNHzHjGe/yPdTuGoKAgKSIiQvLw8BDPwcHByoCAgNCDBw/Gu7i4qDHj+cSJE0r87+npKdZj3/+G9PR0MXt7e2NS8IhiD2iUSqWOfxucnJxMCoXCjNnZ2dng6uqq279/v4afo7Be3idlZGSI2WG4ublJV69etfxWBQYGanNzc43d3d304MEDUqvVxAYQ/02snNgQMU6dOkVXrlwxHj58WMteU2F/Xl6ekOcQ8CXXr1+XfH19JVYUEx0drW9tbaWVlRWy4MOHD5ScnEz19fXU0dFBAwMD9PTpU6qoqKC+vj568uQJxcXF6bGfj1DKycnZnof4y2LOnTs3NTo6Kpuwhjdv3lB1dbX8tIb5+XliEtP4+LhYc+HChSkYJIv8N4B08IiPj4/q0KFD+uHhYVmNNRobG6mrq0t+ssa7d++ouLiYZmZm6O3btzhSPR+pCsT+J1KfPHlSYk8oOGS1TGD6/PmzrGINZrOZrl27RnNzc/IbW7x8+VKsgTE9PT10/PhxLYtXQL5dYA6I8GWvRHKUGBsaGmTRa1hcXBQ8yc/Pp+/fv8tvNwYTmTj6qKCggBISEoxM8EjIT0lJkTVuAv4SMfMmzZkzZwQZm5ubaWlpiZaXl6mlpYViY2OJDSV2N42MjMhqbbGwsECca0S0YSDSEPaQj+DYEuxKiTcoQ0JCdM+fPyeTySTCGF8G4/jofgvHYJfTxMSErN4a7e3tNuvZIF14eLgSerYEQpARevHiRcPq6qosluj27dtWQv8c8fHxNDQ0JAYMALGxHsavX8vGGZCpUTq2BGoMI76srMwk2yFw9+5dG8GW4e7uLkL88ePHIr/g6CYnJ6mtrY04A1ut5RA3oXTIejYHih5DXVVVZZbtEHj06JHIsvyfzfhbxAGVlZXr15tRy2Q9m8PimfLycivPgD/wAP9nNbhG0eDgoLzKFrOzswhpsfbYsWPEmdx04MAB+zxj4czly5cNX79+lUUSPXv2jJh45Ofn97seYWRlZdGXL1/kVbb48eMHcV0SAYB8U1hYaIB8Wc/mkFmuPHv2rA6hCSCkkd71ej1NT09TZ2en4AivEflmMyATI/EhKj9+/EiJiYmo9vZFkyXPMMk0tbW14qvv3LkjImQ93r9/T5cuXRIpfyP8/PmTbt26JQoo0N/fT0eOHNFw9bcvzyADMw8kPtdIno3csYlM++nTJyFwPR4+fEg1NTVC8XqMjY0RB4L4IAw+KiOriGTZQo9dQO3g81UwYVFLRMH7G+B+5gG9ePFCfvMfvn37RhqNRtQnAAX16NGjojahA7QblqrNzZGKQ1DPZBN8+RuQV7Kzswn9zv379wWPcHwgLTyGnMP8ElUbUeRwK8qb0YdMoasDRzYCOMGtwe8Is4zz58/Tq1eviIui4/0MkJaWJjEXQGQ01zHcMurRTpaWltK9e/eot7dXfPHr169Fm8lbbAay7+nTp/W8N4b7ou11euhZYRCgYnCR03LSMqKSa7VaqqurE+Rm71kZgYrOR2IE5/bt26dir0iZmZmO98AWWG4H4FBTU5OCvRTF1xENe05XVFRkuHnzpikpKcm8d+9eq9sBezQKDRonSbF/27eDPwHSIQoQlqGhoXiF+1EoK49nQ9Ss1OrehAYKUekwWe0Bboo3btwQN0ekdEQHFz6bGyU4t4td7Cwk6Rfibs7nzWBM0QAAAABJRU5ErkJggg==');
+	for(var i=0;i<images.length;i++){
+		var source=images[i];images[i]=new Image();
+		images[i].src=source;images[i].onload=function(){
+				Render();
+			
+		};
+	}
+}
+function Render(){
+	var atual=tipoPrancheta();
+	c.drawImage(images[0],atual.cx,atual.cy,campo.height/24,campo.height/24);
+};
+function criar_bola(){
+	var atual=tipoPrancheta();
+			if(atual.teste_bola==0){
+		atual.teste_bola=1;}else{
+			atual.teste_bola=0;
+		}
+		if(atual.teste_bola==1){
+			LoadImagesAndRender();
+			//Redesenhando Linhas e Vetores
+				for(var i=0;i<atual.linhas.length;i++){
+				c.beginPath();
+				c.strokeStyle=atual.cores_linha[i];
+				c.lineWidth=atual.espessuras[i];
+				c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+				c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+				c.stroke();
+				if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+			}
+			//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+			}
+		}else if(atual.teste_bola==0){	
+			images.pop();
+			c.clearRect(0,0,campo.width,campo.height);
+				if(atual.teste>0){
+					distribuir_jogadores1(c);
+				}
+				if(atual.teste_2>0){
+					distribuir_jogadores2(c);
+			}
+			//Redesenhando Linhas e Vetores
+				for(var i=0;i<atual.linhas.length;i++){
+				c.beginPath();
+				c.strokeStyle=atual.cores_linha[i];
+				c.lineWidth=atual.espessuras[i];
+				c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+				c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+				c.stroke();
+				if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+			}
+			//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+			}
+		}
+	}
+/*campo.onclick=function mensagem(evento){
+	var cor_clicada=c.getImageData(evento.pageX-campo.offsetLeft,evento.pageY-campo.offsetTop,1,1).data;
+	if((cor_clicada[0]==hex_to_dec("color1")[0] && cor_clicada[1]==hex_to_dec("color1")[1] && cor_clicada[2]==hex_to_dec("color1")[2] || (cor_clicada[0]==hex_to_dec("color3")[0] && cor_clicada[1]==hex_to_dec("color3")[1] && cor_clicada[2]==hex_to_dec("color3")[2]))){
+				document.getElementById("Instrucoes").innerHTML="Clique e arraste para mover os jogadores";
+				document.getElementById("Instrucoes").style.left="560px";
+			}
+		}*/
+//Parte 5 - Linhas
+var cor_das_marcacoes="Yellow";
+var espessura_das_linhas=1.5;
+var coord_inicialx,coord_inicialy;
+var desenhando_line=false;
+var movimentando=false;
+function ativar_line(){
+	if(desenhando_line==false){
+		if ($('#Cor_das_Marcacoes option:selected').val() == "1") {
+
+				cor_das_marcacoes="Yellow";
+	    	}else if($('#Cor_das_Marcacoes option:selected').val() == "2"){
+	    		cor_das_marcacoes="Blue";
+	    	}else if($('#Cor_das_Marcacoes option:selected').val() == "3"){
+	    		cor_das_marcacoes="Black";
+	    	}else if($('#Cor_das_Marcacoes option:selected').val() == "4"){	
+	    		cor_das_marcacoes="Red";
+	    	}
+		desenhando_line=false;
+		document.getElementById("Instrucoes").innerHTML="Clique e arraste para desenhar uma Linha";
+		document.getElementById("Instrucoes").style.left="44.44%";
+		desenhando_line=true;
+		ultimo_botao=1;
+		desenhando_vetor=false;
+		desenhando_elipse=false;
+	}else{
+		desenhando_line==false;
+	}
+}
+$('#Cor_das_Marcacoes').change(function () {
+			if ($('#Cor_das_Marcacoes option:selected').val() == "1") {
+				cor_das_marcacoes="Yellow";
+	    	}else if($('#Cor_das_Marcacoes option:selected').val() == "2"){
+	    		cor_das_marcacoes="Blue";
+	    	}else if($('#Cor_das_Marcacoes option:selected').val() == "3"){
+	    		cor_das_marcacoes="Black";
+	    	}else if($('#Cor_das_Marcacoes option:selected').val() == "4"){	
+	    		cor_das_marcacoes="Red";
+	    	}
+	    });
+$('#Espessura_das_Linhas').change(function () {
+			if ($('#Espessura_das_Linhas option:selected').val() == "1") {
+				espessura_das_linhas=1;
+	    	}else if($('#Espessura_das_Linhas option:selected').val() == "2"){
+	    		espessura_das_linhas=1.5;
+	    	}else if($('#Espessura_das_Linhas option:selected').val() == "3"){
+	    		espessura_das_linhas=3;
+	    	}else if($('#Espessura_das_Linhas option:selected').val() == "4"){	
+	    		espessura_das_linhas=6;
+	    	}
+	    });
+//Parte 6 - Vetores
+var desenhando_vetor=false;
+function ativar_vetor(){
+	if(desenhando_vetor==false){
+		document.getElementById("Instrucoes").innerHTML="Clique e arraste para desenhar um Vetor";
+		document.getElementById("Instrucoes").style.left="44.44%";
+		desenhando_vetor=true;
+		ultimo_botao=2;
+		desenhando_line=false;
+		desenhando_elipse=false;
+	}else{
+		desenhando_vetor==false;
+	}
+}
+function apagar_marcacoes(){
+	var atual=tipoPrancheta();
+	if(atual.formas[atual.formas.length-1][1]==0 || atual.formas[atual.formas.length-1][1]==1){
+		atual.linhas.pop();
+	}else if(atual.formas[atual.formas.length-1][1]==2){
+		atual.elipses.pop();
+	}
+	atual.formas.pop();
+	c.clearRect(0,0,campo.width,campo.height);
+	if(atual.teste>0){
+		distribuir_jogadores1(c);
+	}
+	if(atual.teste_2>0){
+		distribuir_jogadores2(c);
+	}
+	//Redesenhando Linhas e Vetores
+				for(var i=0;i<atual.linhas.length;i++){
+				c.beginPath();
+				c.strokeStyle=atual.cores_linha[i];
+				c.lineWidth=atual.espessuras[i];
+				c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+				c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+				c.stroke();
+				if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+			}
+			//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+			}
+			if(atual.teste_bola==1){
+				c.drawImage(images[0],atual.cx,atual.cy,campo.height/24,campo.height/24);
+			}
+}
+//Parte 7 - Elipse
+var desenhando_elipse=false;
+function ativar_elipse(){
+	if(desenhando_elipse==false){
+		document.getElementById("Instrucoes").innerHTML="Clique e arraste para desenhar uma Elipse";
+		document.getElementById("Instrucoes").style.left="44.44%";
+		desenhando_elipse=true;
+		ultimo_botao=3;
+		desenhando_line=false;
+		desenhando_vetor=false;
+	}else{
+		desenhando_elipse==false;
+	}
+}
+var ultimo_botao;
+function separa(){
+	var atual=tipoPrancheta();
+		document.getElementById("Instrucoes").innerHTML="Clique e arraste para mover os jogadores";
+		document.getElementById("Instrucoes").style.left="44.44%";
+		for(var i=0;i<atual.linhas.length;i++){
+						c.beginPath();
+						c.strokeStyle=atual.cores_linha[i];
+						c.lineWidth=atual.espessuras[i];
+						c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+						c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+						c.stroke();
+						if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+				}
+				//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+			}
+			if(atual.teste>0){
+					distribuir_jogadores1(c);
+				}
+				if(atual.teste_2>0){
+					distribuir_jogadores2(c);
+				}
+				if(atual.teste_bola==1){
+					c.drawImage(images[0],atual.cx,atual.cy,campo.height/24,campo.height/24);
+				}
+	}
+	//Parte 8 - Persistência de Dados
+	var equipes=JSON.parse(localStorage.getItem("Times") || "[]");
+	function Armazenar_Time1(){
+		var nome=prompt("Nome do Time?");
+		equipes.push(pranchetas[document.getElementById("prancheta").value-1].time1);
+		localStorage.setItem("Times",JSON.stringify(equipes));
+		    var opt = document.createElement('option');
+		    opt.value = Dados.length+1;
+		    opt.innerHTML = nome;
+		    Dados.push([opt.innerHTML,opt.value,0]);
+		    document.getElementById("Times").appendChild(opt);
+		localStorage.setItem("Dados",JSON.stringify(Dados));
+	}
+	function Armazenar_Time2(){
+		var nome=prompt("Nome do Time?");
+		equipes.push(pranchetas[document.getElementById("prancheta").value-1].time2);
+		localStorage.setItem("Times",JSON.stringify(equipes));
+		    var opt = document.createElement('option');
+		    opt.value = Dados.length+1;
+		    opt.innerHTML = nome;
+		    Dados.push([opt.innerHTML,opt.value,1]);
+		    document.getElementById("Times").appendChild(opt);
+		localStorage.setItem("Dados",JSON.stringify(Dados));
+	}
+	function Verificar1(){
+		var atual=tipoPrancheta();
+		if(document.getElementById("Times").value!=0){
+			for(var i=0;i<equipes.length;i++){
+			if(document.getElementById("Times").value==i+1){
+				atual.time1=equipes[i];
+				if(Dados[i][2]==1){
+					for(var i=0;i<11;i++){
+						atual.time1[i].x=1200-time[i].x;
+						atual.time1[i].y=600-time[i].y;
+					}
+				}
+				time_selecionado=i;
+				break;
+			}
+		}
+		}
+				document.getElementById("color1").value=atual.time1[0].corbase;
+				document.getElementById("color2").value=atual.time1[0].cor2;
+	}
+
+	function Verificar2(){
+		var atual=tipoPrancheta();
+		if(document.getElementById("Times").value!=0){
+		for(var i=0;i<equipes.length;i++){
+			if(document.getElementById("Times").value==i+1){
+				atual.time2=equipes[i];
+				if(Dados[i][2]==0){
+					for(var i=0;i<11;i++){
+						atual.time2[i].x=1200-atual.time2[i].x;
+						atual.time2[i].y=600-atual.time2[i].y;
+					}
+				}
+				time_selecionado=i;
+				break;
+			}
+		}
+	}
+				document.getElementById("color3").value=atual.time2[0].corbase;
+				document.getElementById("color4").value=atual.time2[0].cor2;
+		}
+	var time_selecionado=-1;
+	function deletar(){
+	for(var i=0;i<equipes.length;i++){
+		if(Dados[i][1]==document.getElementById("Times").value){
+			Dados.splice(i,1);
+			equipes.splice(i,1);
+			break;
+		}
+	}
+	document.getElementById("Times").remove(i+1);
+ localStorage.setItem("Dados",JSON.stringify(Dados));
+	localStorage.setItem("Times",JSON.stringify(equipes));
+}
+/*$("#campo").mouseover(function()
+		{
+			if(desenhando_line==true || desenhando_vetor==true || desenhando_elipse==true){
+				if ($('#Cor_das_Marcacoes option:selected').val() == "1") {
+				cor_das_marcacoes="Yellow";
+				$(this).css( 'cursor', 'url(http://www.rw-designer.com/cursor-extern.php?id=113555), auto' );
+	    			}else if($('#Cor_das_Marcacoes option:selected').val() == "2"){
+	    		$(this).css( 'cursor', 'url(http://www.rw-designer.com/cursor-extern.php?id=113551), auto' );
+	    		cor_das_marcacoes="Blue";
+	    			}else if($('#Cor_das_Marcacoes option:selected').val() == "3"){
+	    		cor_das_marcacoes="Black";
+	    		$(this).css( 'cursor', 'url(http://www.rw-designer.com/cursor-extern.php?id=113550), auto' );
+					}else if($('#Cor_das_Marcacoes option:selected').val() == "4"){	
+	    		cor_das_marcacoes="Red";
+	    		$(this).css( 'cursor', 'url(http://www.rw-designer.com/cursor-extern.php?id=113554), auto' );
+	    			}
+		
+				}
+	    });*/
+//Parte 9 - Print(Screenshot)
+function printDiv() {
+	var atual=tipoPrancheta();
+
+
+	desenhar_Campo(c);
+	if(atual.teste>0){
+		distribuir_jogadores1(c);
+	}
+	if(atual.teste_2>0){
+		distribuir_jogadores2(c);
+	}
+	//Redesenhando Linhas e Vetores
+				for(var i=0;i<atual.linhas.length;i++){
+				c.beginPath();
+				c.strokeStyle=atual.cores_linha[i];
+				c.lineWidth=atual.espessuras[i];
+				c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+				c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+				c.stroke();
+				if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+			}
+			//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+			}
+			if(atual.teste_bola==1){
+				c.drawImage(images[0],atual.cx,atual.cy,campo.height/24,campo.height/24);
+			}
+			const link = document.createElement("a");
+  			link.download = 'download.png';
+  			link.href = campo.toDataURL();
+  			link.click();
+  			link.delete; 	
+}
+//Parte 10 - Novas Pranchetas
+var pranchetas=undefined;
+function novaPrancheta(){
+	if(pranchetas==undefined){
+		document.getElementById("Voltar").style.display="none";
+	}else{
+		document.getElementById("Voltar").style.display="block";
+	}
+	document.getElementById("inicioPrancheta").style.display="block";
+}
+
+function Voltar(){
+	document.getElementById("inicioPrancheta").style.display="none";
+
+}
+function criarPrancheta(){
+	if(document.getElementById("nomePrancheta").value!=""){
+		if(pranchetas==undefined){
+			pranchetas=[];
+		}
+		var p={
+				teste:0,
+				teste_2:0,
+				time1:[],
+				time2:[],
+				teste_bola:0,
+				cx:window.innerWidth*290/683,//Coordenada x da Bola
+				cy:window.innerHeight*276/649,///Coordenada y da Bola
+				espessuras:[],
+				formas:[],
+				linhas:[],
+				cores_linha:[],
+				setas:[],
+				elipses:[],
+				cores_elipse:[],
+				espessura_elipse:[],
+				animada:false,
+				dadosCena:undefined,
+				animacoes:undefined,//vetor de registros(animações)
+			}
+			for(var i=0;i<11;i++){
+			p.time1[i]={
+				id:i,
+				x:undefined,
+				y:undefined,
+				d:undefined,
+				numero:"",//String
+				nome:"JOGADOR"+parseInt(i+1),//String
+				corbase:"#FF0000",//StringHex
+				cor2:"#FFFFFF",//StringHex
+			};
+		}
+		p.time1[0].x=campo.width/30;
+				p.time1[0].y=campo.height/2;
+				p.time1[1].x=campo.width/4;//300
+				p.time1[1].y=campo.height*11/12;//550
+				p.time1[4].x=campo.width/4;//300
+				p.time1[4].y=campo.height/12;//50
+				p.time1[2].x=campo.width/6;//200
+				p.time1[2].y=campo.height*2/3;//800
+				p.time1[3].x=campo.width/6;//200
+				p.time1[3].y=campo.height/3;//200
+				p.time1[5].x=campo.width/4;//300
+				p.time1[5].y=campo.height/2;//300
+				p.time1[6].x=campo.width*11/24;//550
+				p.time1[6].y=campo.height/3;//200
+				p.time1[7].x=campo.width*11/24;//550
+				p.time1[7].y=campo.height*2/3;//400
+				p.time1[8].x=campo.width*7/12;//700
+				p.time1[8].y=campo.height*11/12;//550
+				p.time1[9].x=campo.width*7/12//700
+				p.time1[9].y=campo.height/12;//50
+				p.time1[10].x=campo.width*17/24;//850
+				p.time1[10].y=campo.height/2;//300
+		for(var i=0;i<11;i++){
+			p.time2[i]={
+				id:i,
+				x:undefined,
+				y:undefined,
+				d:undefined,
+				numero:"",//String
+				nome:"JOGADOR"+parseInt(i+1),//String
+				corbase:"#0000FF",//StringHex
+				cor2:"#FFFFFF",//StringHex
+			};
+		}
+				p.time2[0].x=campo.width*29/30;//1160
+				p.time2[0].y=campo.height/2;//300
+				p.time2[1].x=campo.width/4;//300
+				p.time2[1].y=campo.height*11/12;//550
+				p.time2[4].x=campo.width/4;//300
+				p.time2[4].y=campo.height/12;//50
+				p.time2[2].x=campo.width/6;//200
+				p.time2[2].y=campo.height*2/3;//800
+				p.time2[3].x=campo.width/6;//200
+				p.time2[3].y=campo.height/3;//200
+				p.time2[5].x=campo.width/4;//300
+				p.time2[5].y=campo.height/2;//300
+				p.time2[6].x=campo.width*11/24;//550
+				p.time2[6].y=campo.height/3;//200
+				p.time2[7].x=campo.width*11/24;//550
+				p.time2[7].y=campo.height*2/3;//400
+				p.time2[8].x=campo.width*7/12;//700
+				p.time2[8].y=campo.height*11/12;//550
+				p.time2[9].x=campo.width*7/12//700
+				p.time2[9].y=campo.height/12;//50
+				p.time2[10].x=campo.width*17/24;//850
+				p.time2[10].y=campo.height/2;//300
+				for(var i=1;i<11;i++){
+				p.time2[i].x=campo.width*23/24-p.time2[i].x;
+			}
+			p.animada=document.getElementById("PranchetaAnimada").checked;
+			if(p.animada){
+				document.getElementById("Play").style.display="block";
+				document.getElementById("Cena1").style.display="block";
+				document.getElementById("Cena2").style.display="block";
+				document.getElementById("Cena3").style.display="block";
+				document.getElementById("Cena4").style.display="block";
+				document.getElementById("Cena5").style.display="block";
+				document.getElementById("Cena6").style.display="block";
+				document.getElementById("Cena7").style.display="block";
+				document.getElementById("Cena8").style.display="block";
+				document.getElementById("Cena9").style.display="block";
+				document.getElementById("Cena10").style.display="block";
+				document.getElementById("Acrescentar").style.display="block";
+				document.getElementById("Deletar").style.display="block";
+			p.dadosCena={
+				cena:[],
+				cena_atual:1,//1 a n
+			}
+			Acrescentar();
+			}else{
+				document.getElementById("Play").style.display="none";
+				document.getElementById("Cena1").style.display="none";
+				document.getElementById("Cena2").style.display="none";
+				document.getElementById("Cena3").style.display="none";
+				document.getElementById("Cena4").style.display="none";
+				document.getElementById("Cena5").style.display="none";
+				document.getElementById("Cena6").style.display="none";
+				document.getElementById("Cena7").style.display="none";
+				document.getElementById("Cena8").style.display="none";
+				document.getElementById("Cena9").style.display="none";
+				document.getElementById("Cena10").style.display="none";
+				document.getElementById("Acrescentar").style.display="none";
+				document.getElementById("Deletar").style.display="none";
+			}
+		if(p.animada){
+			p.animacoes={
+				velocidade:1.0,
+				animacao:[],
+				}
+		}	
+		pranchetas.push(p);
+		var select =document.getElementById("prancheta");
+		var opt=document.createElement("option");
+		opt.value=pranchetas.length;
+		opt.innerHTML=document.getElementById("nomePrancheta").value;
+		select.appendChild(opt);
+		document.getElementById("prancheta").value=opt.value;
+		document.getElementById("Formacoes1").value="1";
+		document.getElementById("Formacoes2").value="1";
+		c.clearRect(0,0,campo.width,campo.height);
+		Voltar();
+		document.getElementById("nomePrancheta").value="";
+	}
+}
+$('#prancheta').change(function () {
+	var atual = tipoPrancheta();
+	if(atual.animada){
+			document.getElementById("Play").style.display="block";
+				document.getElementById("Cena1").style.display="block";
+				document.getElementById("Cena2").style.display="block";
+				document.getElementById("Cena3").style.display="block";
+				document.getElementById("Cena4").style.display="block";
+				document.getElementById("Cena5").style.display="block";
+				document.getElementById("Cena6").style.display="block";
+				document.getElementById("Cena7").style.display="block";
+				document.getElementById("Cena8").style.display="block";
+				document.getElementById("Cena9").style.display="block";
+				document.getElementById("Cena10").style.display="block";
+				document.getElementById("Acrescentar").style.display="block";
+				document.getElementById("Deletar").style.display="block";
+	}else{
+			document.getElementById("Play").style.display="none";
+				document.getElementById("Cena1").style.display="none";
+				document.getElementById("Cena2").style.display="none";
+				document.getElementById("Cena3").style.display="none";
+				document.getElementById("Cena4").style.display="none";
+				document.getElementById("Cena5").style.display="none";
+				document.getElementById("Cena6").style.display="none";
+				document.getElementById("Cena7").style.display="none";
+				document.getElementById("Cena8").style.display="none";
+				document.getElementById("Cena9").style.display="none";
+				document.getElementById("Cena10").style.display="none";
+				document.getElementById("Acrescentar").style.display="none";
+				document.getElementById("Deletar").style.display="none";
+	}
+	c.clearRect(0,0,campo.width,campo.height);
+	if(atual.teste>0){
+		distribuir_jogadores1(c);
+	}
+	if(atual.teste_2>0){
+		distribuir_jogadores2(c);
+	    }
+	    if(atual.teste_bola>0){
+	    	c.drawImage(images[0],atual.cx,atual.cy,campo.height/24,campo.height/24);
+	    }
+	    //Redesenhando Linhas e Vetores
+				for(var i=0;i<atual.linhas.length;i++){
+				c.beginPath();
+				c.strokeStyle=atual.cores_linha[i];
+				c.lineWidth=atual.espessuras[i];
+				c.moveTo(atual.linhas[i][0],atual.linhas[i][1]);
+				c.lineTo(atual.linhas[i][2],atual.linhas[i][3]);
+				c.stroke();
+				if(atual.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=atual.cores_linha[i];
+							c.lineWidth=atual.espessuras[i];
+							c.moveTo(atual.linhas[i][2],atual.linhas[i][3]);
+							var angulo=Math.atan((atual.linhas[i][3]-atual.linhas[i][1])/(atual.linhas[i][2]-atual.linhas[i][0]));
+							var k=Math.sign(atual.linhas[i][2]-atual.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),atual.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(atual.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),atual.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+			}
+			//Redesenhando Elipses
+			for(var i=0;i<atual.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=atual.cores_elipse[i];
+				c.lineWidth=atual.espessura_elipse[i];
+				c.ellipse(atual.elipses[i][0],atual.elipses[i][1],Math.abs(atual.elipses[i][2]),Math.abs(atual.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=atual.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+			}
+	})
+//Parte 11 - Cenas
+function Acrescentar(){
+	if(pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena.length<10){
+		document.getElementById("Cena"+parseInt(pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena.length+1)).disabled=false; //libera o próximo botão
+		var pr={ //pr-->Cena dentro da Prancheta(Vai ser a Cena Atual)
+			//Atributos Básicos
+				teste:0,
+				teste_2:0,
+				time1:[],
+				time2:[],
+				teste_bola:0,
+				cx:window.innerWidth*290/683,//Coordenada x da Bola
+				cy:window.innerHeight*276/649,///Coordenada y da Bola
+				espessuras:[],
+				formas:[],
+				linhas:[],
+				cores_linha:[],
+				setas:[],
+				elipses:[],
+				cores_elipse:[],
+				espessura_elipse:[],
+			}
+			for(var i=0;i<11;i++){
+			pr.time1[i]={
+				id:i,
+				x:undefined,
+				y:undefined,
+				d:undefined,
+				numero:"",//String
+				nome:"JOGADOR"+parseInt(i+1),//String
+				corbase:"#FF0000",//StringHex
+				cor2:"#FFFFFF",//StringHex
+			};
+		}
+		pr.time1[0].x=campo.width/30;
+				pr.time1[0].y=campo.height/2;
+				pr.time1[1].x=campo.width/4;//300
+				pr.time1[1].y=campo.height*11/12;//550
+				pr.time1[4].x=campo.width/4;//300
+				pr.time1[4].y=campo.height/12;//50
+				pr.time1[2].x=campo.width/6;//200
+				pr.time1[2].y=campo.height*2/3;//800
+				pr.time1[3].x=campo.width/6;//200
+				pr.time1[3].y=campo.height/3;//200
+				pr.time1[5].x=campo.width/4;//300
+				pr.time1[5].y=campo.height/2;//300
+				pr.time1[6].x=campo.width*11/24;//550
+				pr.time1[6].y=campo.height/3;//200
+				pr.time1[7].x=campo.width*11/24;//550
+				pr.time1[7].y=campo.height*2/3;//400
+				pr.time1[8].x=campo.width*7/12;//700
+				pr.time1[8].y=campo.height*11/12;//550
+				pr.time1[9].x=campo.width*7/12//700
+				pr.time1[9].y=campo.height/12;//50
+				pr.time1[10].x=campo.width*17/24;//850
+				pr.time1[10].y=campo.height/2;//300
+		for(var i=0;i<11;i++){
+			pr.time2[i]={
+				id:i,
+				x:undefined,
+				y:undefined,
+				d:undefined,
+				numero:"",//String
+				nome:"JOGADOR"+parseInt(i+1),//String
+				corbase:"#0000FF",//StringHex
+				cor2:"#FFFFFF",//StringHex
+			};
+		}
+				pr.time2[0].x=campo.width*29/30;//1160
+				pr.time2[0].y=campo.height/2;//300
+				pr.time2[1].x=campo.width/4;//300
+				pr.time2[1].y=campo.height*11/12;//550
+				pr.time2[4].x=campo.width/4;//300
+				pr.time2[4].y=campo.height/12;//50
+				pr.time2[2].x=campo.width/6;//200
+				pr.time2[2].y=campo.height*2/3;//800
+				pr.time2[3].x=campo.width/6;//200
+				pr.time2[3].y=campo.height/3;//200
+				pr.time2[5].x=campo.width/4;//300
+				pr.time2[5].y=campo.height/2;//300
+				pr.time2[6].x=campo.width*11/24;//550
+				pr.time2[6].y=campo.height/3;//200
+				pr.time2[7].x=campo.width*11/24;//550
+				pr.time2[7].y=campo.height*2/3;//400
+				pr.time2[8].x=campo.width*7/12;//700
+				pr.time2[8].y=campo.height*11/12;//550
+				pr.time2[9].x=campo.width*7/12//700
+				pr.time2[9].y=campo.height/12;//50
+				pr.time2[10].x=campo.width*17/24;//850
+				pr.time2[10].y=campo.height/2;//300
+				for(var i=1;i<11;i++){
+				pr.time2[i].x=campo.width*23/24-pr.time2[i].x;
+			}
+			if(pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena.length>0){
+			//Ultima cena criada antes de adicionar uma nova
+				var ultima_cena=pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena.length-1];
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena.push(pr);//Vetor de Pranchetas(Cenas) dentro da Prancheta
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual=pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena.length;//CenaAtual=NovaUltima
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].teste=ultima_cena.teste;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].teste_2=ultima_cena.teste_2;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].teste_bola=ultima_cena.teste_bola;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].cx=ultima_cena.cx;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].cy=ultima_cena.cy;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].espessuras=ultima_cena.espessuras;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].formas=ultima_cena.formas;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].linhas=ultima_cena.linhas;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].cores_linha=ultima_cena.cores_linha;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].setas=ultima_cena.setas;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].elipses=ultima_cena.elipses;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].cores_elipse=ultima_cena.cores_elipse;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].espessura_elipse=ultima_cena.espessura_elipse;
+				//SETANDO TODOS OS ATRIBUTOS DOS JOGADORES!
+	for(var i=0;i<11;i++){
+		for(var j=0;j<11;j++){
+			if(ultima_cena.time1[i].id==pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].time1[j].id){
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].time1[j].x=ultima_cena.time1[i].x;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].time1[j].y=ultima_cena.time1[i].y;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].time1[j].corbase=ultima_cena.time1[i].corbase;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].time1[j].cor_2=ultima_cena.time1[i].cor_2;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].time1[j].nome=ultima_cena.time1[i].nome;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].time1[j].numero=ultima_cena.time1[i].numero;
+			}
+		}
+	}
+	//SETANDO TODOS OS ATRIBUTOS DOS JOGADORES!
+	for(var i=0;i<11;i++){
+		for(var j=0;j<11;j++){
+			if(ultima_cena.time2[i].id==pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].time2[j].id){
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].time2[j].x=ultima_cena.time2[i].x;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].time2[j].y=ultima_cena.time2[i].y;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].time2[j].corbase=ultima_cena.time2[i].corbase;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].time2[j].cor_2=ultima_cena.time2[i].cor_2;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].time2[j].nome=ultima_cena.time2[i].nome;
+				pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1].time2[j].numero=ultima_cena.time2[i].numero;
+					}
+				}
+			}
+			//Adicionando animações
+			if(pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena.length>1){
+				var animacao = {
+				cena_inicial:pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-2],//Cena do Jeito que ela está
+				cena_final:pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1],//A Cena alterada
+					dados:[]
+				}
+				pranchetas[document.getElementById("prancheta").value-1].animacoes.animacao.push(animacao);
+			}
+		}else{
+			pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena.push(pr);
+		}
+		}
+	}
+
+function desenharCena(cena,c){
+	if(cena.teste>0){
+		distribuir_jogadores1(c);
+	}
+	if(cena.teste_2>0){
+		distribuir_jogadores2(c);
+		}
+		if(cena.teste_bola>0){
+	    	c.drawImage(images[0],cena.cx,cena.cy,campo.height/24,campo.height/24);
+	    }
+	    //Redesenhando Linhas e Vetores
+				for(var i=0;i<cena.linhas.length;i++){
+				c.beginPath();
+				c.strokeStyle=cena.cores_linha[i];
+				c.lineWidth=cena.espessuras[i];
+				c.moveTo(cena.linhas[i][0],cena.linhas[i][1]);
+				c.lineTo(cena.linhas[i][2],cena.linhas[i][3]);
+				c.stroke();
+				if(cena.setas[i]==true){
+							c.beginPath();
+							c.fillStyle=cena.cores_linha[i];
+							c.lineWidth=cena.espessuras[i];
+							c.moveTo(cena.linhas[i][2],cena.linhas[i][3]);
+							var angulo=Math.atan((cena.linhas[i][3]-cena.linhas[i][1])/(cena.linhas[i][2]-cena.linhas[i][0]));
+							var k=Math.sign(cena.linhas[i][2]-cena.linhas[i][0]);
+							if(k==-1){
+								angulo=Math.PI+angulo;
+							}
+							c.lineTo(cena.linhas[i][2]-10*c.lineWidth*Math.cos(-1*angulo-Math.PI/6),cena.linhas[i][3]+10*c.lineWidth*Math.sin(-1*angulo-Math.PI/6));
+							c.lineTo(cena.linhas[i][2]-10*c.lineWidth*Math.sin(Math.PI/3+angulo),cena.linhas[i][3]+10*c.lineWidth*Math.cos(Math.PI/3+angulo));
+							c.fill();
+				}
+			}
+			//Redesenhando Elipses
+			for(var i=0;i<cena.elipses.length;i++){
+				c.beginPath(); 
+				c.strokeStyle=cena.cores_elipse[i];
+				c.lineWidth=cena.espessura_elipse[i];
+				c.ellipse(cena.elipses[i][0],cena.elipses[i][1],Math.abs(cena.elipses[i][2]),Math.abs(cena.elipses[i][3]),0,0,2*Math.PI);
+				c.stroke();
+				c.fillStyle=cena.cores_elipse[i];
+				c.globalAlpha=0.3;
+				c.fill();
+				c.globalAlpha=1;
+			}
+}
+var testeAnimacao=false;
+function Deletar(){
+	if(pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena.length>1){
+		pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena.pop();
+		document.getElementById("Cena"+parseInt(pranchetas[document.getElementById("prancheta").value-1].dadosCena.length+1)).disabled=true;
+	}
+}
+//Clico em uma Cena
+function habilitarBotoes(n){
+	atualizarCena(n);
+	for(var i=1;i<=pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena.length;i++){
+		if(i==n){
+			c.clearRect(0,0,campo.width,campo.height);
+			desenharCena(pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[n-1],c);
+			break;
+		}
+	}
+}
+function atualizarCena(n){
+	pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual=n;
+}
+function tipoPrancheta(){
+	if(pranchetas[document.getElementById("prancheta").value-1].animada){
+		return pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena[pranchetas[document.getElementById("prancheta").value-1].dadosCena.cena_atual-1];
+	}else{
+		return pranchetas[document.getElementById("prancheta").value-1];
+	}
+}
+//Parte 12 - Animações
+var indiceCena=0;//Passa de Cena em Cena para atualizar os movimentos
+function animarMovimentos(){
+	//Pesquisando movimentos no time 1
+	for(var i=0;i<11;i++){
+		if((pranchetas[document.getElementById("prancheta").value-1].animacoes.animacao[indiceCena].cena_inicial.time1[i].x!=pranchetas[document.getElementById("prancheta").value-1].animacoes.animacao[indiceCena].cena_final.time1[i].x) || (pranchetas[document.getElementById("prancheta").value-1].animacoes.animacao[indiceCena].cena_inicial.time1[i].y!=pranchetas[document.getElementById("prancheta").value-1].animacoes.animacao[indiceCena].cena_final.time1[i].y)){
+			//Houve movimento desse Jogador
+			var xi=pranchetas[document.getElementById("prancheta").value-1].animacoes.animacao[indiceCena].cena_inicial.time1[i].x;
+			var yi=pranchetas[document.getElementById("prancheta").value-1].animacoes.animacao[indiceCena].cena_inicial.time1[i].y;
+			var xf=pranchetas[document.getElementById("prancheta").value-1].animacoes.animacao[indiceCena].cena_final.time1[i].x;
+			var yf=pranchetas[document.getElementById("prancheta").value-1].animacoes.animacao[indiceCena].cena_final.time1[i].y;
+			var d = Math.sqrt(Math.pow(xf-xi,2)+Math.pow(yf-yi,2));
+			var deltaX=(xf-xi)/d;
+			var deltaY=(yf-yi)/d;
+			pranchetas[document.getElementById("prancheta").value-1].animacoes.animacao[indiceCena].dados.push([xi,yi,xf,yf,deltaX,deltaY]);
+
+		}else{
+			//Não houve movimento do Jogador
+			var xi=pranchetas[document.getElementById("prancheta").value-1].animacoes.animacao[indiceCena].cena_inicial.time1[i].x;
+			var yi=pranchetas[document.getElementById("prancheta").value-1].animacoes.animacao[indiceCena].cena_inicial.time1[i].y;
+			var xf=pranchetas[document.getElementById("prancheta").value-1].animacoes.animacao[indiceCena].cena_final.time1[i].x;
+			var yf=pranchetas[document.getElementById("prancheta").value-1].animacoes.animacao[indiceCena].cena_final.time1[i].y;
+			pranchetas[document.getElementById("prancheta").value-1].animacoes.animacao[indiceCena].dados.push([xi,yi,xf,yf,0,0]);
+		}
+	}
+	for(var j=0;j<11;j++){
+	}
+}
+function playAnimacao(){
+	indiceCena=0;
+	for(var i=0;i<pranchetas[document.getElementById("prancheta").value-1].animacoes.animacao.length;i++){
+		animarMovimentos();
+		indiceCena++;//Muda a cena durante a animação
+	}
+}
+
+function variarPosicoes(xi,yi,deltaX,deltaY,xf,yf){
+	if(xi!=xf || yi!=yf){
+		xi=xi+deltaX;
+		yi=yi+deltaY;
+	}else{
+		clearInterval(variarPosicoes(xi,yi,deltaX,deltaY,xf,yf));
+	}
+}
+</script>
+</body>
+</html>
